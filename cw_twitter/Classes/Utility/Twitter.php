@@ -77,7 +77,6 @@ class Tx_CwTwitter_Utility_Twitter {
 				throw new Exception("Invalid mode specified");
 				break;
 		}
-		return $twitter->getTweetsFromTimeline();
 	}
 
 	/**

@@ -1,5 +1,5 @@
 <ul>
 <f:for each="{tweets}" as="tweet">
-	<li><img src="{tweet.user.profile_image_url}" alt="{tweet.user.name}" />{tweet.user.name}: {tweet.text}</li>
+	<li><img src="{tweet.user.profile_image_url}" alt="{tweet.user.name}" />{tweet.user.name} <f:format.date>{tweet.created_at}</f:format.date>: {tweet.text}</li>
 </f:for>
 </ul>
