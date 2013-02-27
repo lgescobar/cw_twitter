@@ -11,7 +11,8 @@ plugin.tx_cwtwitter {
 			}
 		}
 		mode = timeline
-		query = cmsworks
+		username = cmsworks
+		query =
 		limit = 10
 	}
 	view {

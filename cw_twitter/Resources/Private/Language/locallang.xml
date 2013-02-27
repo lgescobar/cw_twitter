@@ -10,7 +10,8 @@
 			<label index="flexform.settings.mode">Mode</label>
 			<label index="flexform.settings.mode.timeline">Timeline</label>
 			<label index="flexform.settings.mode.search">Search</label>
-			<label index="flexform.settings.query">Query or username</label>
+			<label index="flexform.settings.query">Search query</label>
+			<label index="flexform.settings.username">Username</label>
 			<label index="flexform.settings.limit">Tweet limit</label>
 		</languageKey>
 	</data>

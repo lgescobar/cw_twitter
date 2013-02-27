@@ -68,7 +68,7 @@ class Tx_CwTwitter_Utility_Twitter {
 		$limit = intval($settings['limit']);
 		switch ($settings['mode']) {
 			case 'timeline':
-				return $twitter->getTweetsFromTimeline($settings['query'], $limit);
+				return $twitter->getTweetsFromTimeline($settings['username'], $limit);
 				break;
 			case 'search':
 				return $twitter->getTweetsFromSearch($settings['query'], $limit);

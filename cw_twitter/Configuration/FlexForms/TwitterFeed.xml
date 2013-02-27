@@ -13,7 +13,7 @@
 					<settings.mode>
 						<TCEforms>
 							<label>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.settings.mode</label>
-							<l10n_mode>mergeIfNotBlank</l10n_mode>
+							<onChange>reload</onChange>
 							<config>
 								<type>select</type>
 								<items type="array">
@@ -33,16 +33,24 @@
 					<settings.query>
 						<TCEforms>
 							<label>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.settings.query</label>
-							<l10n_mode>mergeIfNotBlank</l10n_mode>
+							<displayCond>FIELD:settings.mode:=:search</displayCond>
 							<config>
 								<type>input</type>
 							</config>
 						</TCEforms>
 					</settings.query>
+					<settings.username>
+						<TCEforms>
+							<label>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.settings.username</label>
+							<displayCond>FIELD:settings.mode:=:timeline</displayCond>
+							<config>
+								<type>input</type>
+							</config>
+						</TCEforms>
+					</settings.username>
 					<settings.limit>
 						<TCEforms>
 							<label>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.settings.limit</label>
-							<l10n_mode>mergeIfNotBlank</l10n_mode>
 							<config>
 								<type>input</type>
 								<eval>int</eval>
