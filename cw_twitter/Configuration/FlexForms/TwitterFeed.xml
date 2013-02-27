@@ -1,0 +1,54 @@
+<T3DataStructure>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.sheets.sDEF</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<settings.mode>
+						<TCEforms>
+							<label>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.settings.mode</label>
+							<l10n_mode>mergeIfNotBlank</l10n_mode>
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.settings.mode.timeline</numIndex>
+										<numIndex index="1">timeline</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.settings.mode.search</numIndex>
+										<numIndex index="1">search</numIndex>
+									</numIndex>
+								</items>
+								<default>timeline</default>
+							</config>
+						</TCEforms>
+					</settings.mode>
+					<settings.query>
+						<TCEforms>
+							<label>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.settings.query</label>
+							<l10n_mode>mergeIfNotBlank</l10n_mode>
+							<config>
+								<type>input</type>
+							</config>
+						</TCEforms>
+					</settings.query>
+					<settings.limit>
+						<TCEforms>
+							<label>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.settings.limit</label>
+							<l10n_mode>mergeIfNotBlank</l10n_mode>
+							<config>
+								<type>input</type>
+								<eval>int</eval>
+								<default>10</default>
+							</config>
+						</TCEforms>
+					</settings.limit>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

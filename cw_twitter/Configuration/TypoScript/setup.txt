@@ -1,0 +1,25 @@
+plugin.tx_cwtwitter {
+	settings {
+		oauth {
+			consumer {
+				key = {$plugin.tx_cwtwitter.settings.oauth.consumer.key}
+				secret = {$plugin.tx_cwtwitter.settings.oauth.consumer.secret}
+			}
+			token {
+				key = {$plugin.tx_cwtwitter.settings.oauth.token.key}
+				secret = {$plugin.tx_cwtwitter.settings.oauth.token.secret}
+			}
+		}
+		mode = timeline
+		query = cmsworks
+		limit = 10
+	}
+	view {
+		templateRootPath = {$plugin.tx_cwtwitter.view.templateRootPath}
+		partialRootPath = {$plugin.tx_cwtwitter.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_cwtwitter.view.layoutRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_cwtwitter.persistence.storagePid}
+	}
+}

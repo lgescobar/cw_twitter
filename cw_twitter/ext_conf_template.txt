@@ -1,0 +1,2 @@
+# cat=basic; type=int; label=Lifetime of tweetcache in seconds
+lifetime = 60

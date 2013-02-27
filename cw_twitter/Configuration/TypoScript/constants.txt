@@ -1,0 +1,33 @@
+plugin.tx_cwtwitter {
+	settings {
+		oauth {
+			consumer {
+				# cat=plugin.tx_cwtwitter/oauth; type=string; label=OAuth Consumer Key
+				key =
+				# cat=plugin.tx_cwtwitter/oauth; type=string; label=OAuth Consumer Secret
+				secret =
+			}
+			token {
+				# cat=plugin.tx_cwtwitter/oauth; type=string; label=OAuth Token Key
+				key =
+				# cat=plugin.tx_cwtwitter/oauth; type=string; label=OAuth Token Secret
+				secret =
+			}
+		}
+		mode = timeline
+		query =
+		limit =
+	}
+	view {
+		# cat=plugin.tx_cwtwitter/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:cw_twitter/Resources/Private/Templates/
+		# cat=plugin.tx_cwtwitter/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:cw_twitter/Resources/Private/Partials/
+		# cat=plugin.tx_cwtwitter/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:cw_twitter/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_cwtwitter//a; type=string; label=Default storage PID
+		storagePid =
+	}
+}
