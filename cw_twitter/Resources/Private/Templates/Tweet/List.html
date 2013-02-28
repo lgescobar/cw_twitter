@@ -1,5 +1,22 @@
-<ul>
-<f:for each="{tweets}" as="tweet">
-	<li><img src="{tweet.user.profile_image_url}" alt="{tweet.user.name}" />{tweet.user.name} <f:format.date>{tweet.created_at}</f:format.date>: {tweet.text}</li>
-</f:for>
-</ul>
+<f:if condition="{tweets}">
+	<f:then>
+		<f:for each="{tweets}" as="tweet">
+			<div class="cwtw-Tweet">
+				<div class="cwtw-TweetAvatar">
+					<img src="{tweet.user.profile_image_url}" alt="{tweet.user.name}" height="48" width="48" class="cwtw-TweetAvatar-image"/>
+				</div>
+				<div class="cwtw-TweetText">
+					<p>{tweet.text}</p>
+				</div>
+				<div class="cwtw-TweetMeta">
+					<a href="http://twitter.com/{tweet.user.screen_name}/statuses/{tweet.id_str}" class="cwtw-TweetMeta-timestamp">
+						<f:format.date>{tweet.created_at}</f:format.date>
+					</a>
+				</div>
+			</div>
+		</f:for>
+	</f:then>
+	<f:else>
+		<f:translate key="tweetlist.empty" />
+	</f:else>
+</f:if>
