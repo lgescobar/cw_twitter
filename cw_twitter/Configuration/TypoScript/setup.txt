@@ -26,11 +26,9 @@ plugin.tx_cwtwitter {
 }
 
 plugin.tx_cwtwitter._CSS_DEFAULT_STYLE (
-	/* Tweet */
-	.cwtw-Tweet {
+	.cwtw-TweetWrap {
 		margin-bottom: 1em;
 	}
-	/* Avatar */
 	.cwtw-TweetAvatar {
 		float: left;
 		width: 48px;
@@ -38,13 +36,10 @@ plugin.tx_cwtwitter._CSS_DEFAULT_STYLE (
 	.cwtw-TweetAvatar-image {
 		display: block;
 	}
-	/* Text */
-	.cwtw-TweetText {
+	.cwtw-Tweet {
 		margin-left: 58px;
 	}
-	/* Meta info */
 	.cwtw-TweetMeta {
-		margin-left: 58px;
 		font-size: .9em;
 	}
 )
