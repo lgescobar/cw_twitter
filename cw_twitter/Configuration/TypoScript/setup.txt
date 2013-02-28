@@ -24,3 +24,27 @@ plugin.tx_cwtwitter {
 		storagePid = {$plugin.tx_cwtwitter.persistence.storagePid}
 	}
 }
+
+plugin.tx_cwtwitter._CSS_DEFAULT_STYLE (
+	/* Tweet */
+	.cwtw-Tweet {
+		margin-bottom: 1em;
+	}
+	/* Avatar */
+	.cwtw-TweetAvatar {
+		float: left;
+		width: 48px;
+	}
+	.cwtw-TweetAvatar-image {
+		display: block;
+	}
+	/* Text */
+	.cwtw-TweetText {
+		margin-left: 58px;
+	}
+	/* Meta info */
+	.cwtw-TweetMeta {
+		margin-left: 58px;
+		font-size: .9em;
+	}
+)
