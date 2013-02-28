@@ -185,6 +185,7 @@ class Tx_CwTwitter_Utility_Twitter {
 		curl_setopt_array($hCurl, array(
 			CURLOPT_HTTPHEADER => array($request->to_header()),
 			CURLOPT_RETURNTRANSFER => True,
+			CURLOPT_TIMEOUT => 5000,
 		));
 
 		$response = curl_exec($hCurl);
