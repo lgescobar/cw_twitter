@@ -14,6 +14,7 @@
 			<label index="flexform.settings.username">Username</label>
 			<label index="flexform.settings.limit">Tweet limit</label>
 			<label index="tweetlist.empty">No (recent) tweets found</label>
+			<label index="error.request">Error occured while retrieving tweets</label>
 		</languageKey>
 	</data>
 </T3locallang>

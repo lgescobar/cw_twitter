@@ -36,6 +36,7 @@
 							<displayCond>FIELD:settings.mode:=:search</displayCond>
 							<config>
 								<type>input</type>
+								<eval>required</eval>
 							</config>
 						</TCEforms>
 					</settings.query>
@@ -45,6 +46,7 @@
 							<displayCond>FIELD:settings.mode:=:timeline</displayCond>
 							<config>
 								<type>input</type>
+								<eval>required</eval>
 							</config>
 						</TCEforms>
 					</settings.username>

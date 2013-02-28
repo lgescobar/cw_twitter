@@ -30,30 +30,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_CwTwitter_Controller_TweetController extends Tx_Extbase_MVC_Controller_ActionController {
-	/**
-	 * List tweets
-	 *
-	 * @return void
-	 */
-	public function listAction() {
-		try {
-			$tweets = Tx_CwTwitter_Utility_Twitter::getTweetsFromSettings($this->settings);
-			if($this->settings['mode'] == 'timeline') {
-				$this->view->assign('user', Tx_CwTwitter_Utility_Twitter::getUserFromSettings($this->settings));
-			}
-		}
-		catch(Tx_CwTwitter_Exception_ConfigurationException $e) {
-			return $e->getMessage();
-		}
-		catch(Tx_CwTwitter_Exception_RequestException $e) {
-			t3lib_div::sysLog($e->getMessage(), 'cw_twitter', 3);
-			$this->view->assign('error', $e);
-		}
+class Tx_CwTwitter_Exception_ConfigurationException extends Exception {
 
-		$this->view->assignMultiple(array(
-			'tweets' => $tweets,
-		));
-	}
 }
 ?>

@@ -57,13 +57,30 @@ class Tx_CwTwitter_Utility_Twitter {
 	protected $api_url = 'https://api.twitter.com/1.1/';
 
 	/**
+	 * Construct Twitter-object from settings
+	 *
+	 * @param array $settings
+	 * @return Tx_CwTwitter_Utility_Twitter
+	 */
+	public static function getTwitterFromSettings($settings) {
+		if(!$settings['oauth']['consumer']['key'] || !$settings['oauth']['consumer']['secret'] || !$settings['oauth']['token']['key'] || !$settings['oauth']['token']['secret']) {
+			throw new Tx_CwTwitter_Exception_ConfigurationException("Missing OAuth keys and/or secrets.", 1362059167);
+
+		}
+
+		$twitter = new Tx_CwTwitter_Utility_Twitter();
+		$twitter->setConsumer($settings['oauth']['consumer']['key'], $settings['oauth']['consumer']['secret']);
+		$twitter->setToken($settings['oauth']['token']['key'], $settings['oauth']['token']['secret']);
+
+		return $twitter;
+	}
+
+	/**
 	 * @param array $settings
 	 * @return array
 	 */
 	public static function getTweetsFromSettings($settings) {
-		$twitter = new Tx_CwTwitter_Utility_Twitter();
-		$twitter->setConsumer($settings['oauth']['consumer']['key'], $settings['oauth']['consumer']['secret']);
-		$twitter->setToken($settings['oauth']['token']['key'], $settings['oauth']['token']['secret']);
+		$twitter = self::getTwitterFromSettings($settings);
 
 		$limit = intval($settings['limit']);
 		switch ($settings['mode']) {
@@ -74,9 +91,15 @@ class Tx_CwTwitter_Utility_Twitter {
 				return $twitter->getTweetsFromSearch($settings['query'], $limit);
 				break;
 			default:
-				throw new Exception("Invalid mode specified");
+				throw new Tx_CwTwitter_Exception_ConfigurationException("Invalid mode specified.", 1362059199);
 				break;
 		}
+	}
+
+	public static function getUserFromSettings($settings) {
+		$twitter = self::getTwitterFromSettings($settings);
+
+		return $twitter->getUser($settings['username']);
 	}
 
 	/**
@@ -138,7 +161,7 @@ class Tx_CwTwitter_Utility_Twitter {
 			$params['count'] = $limit;
 		}
 
-		return $this->getTweets('statuses/user_timeline', $params);
+		return $this->getData('statuses/user_timeline', $params);
 	}
 
 	/**
@@ -157,7 +180,19 @@ class Tx_CwTwitter_Utility_Twitter {
 			$params['count'] = $limit;
 		}
 
-		return $this->getTweets('search/tweets', $params)->statuses;
+		return $this->getData('search/tweets', $params)->statuses;
+	}
+
+	/**
+	 * Returns the user object for specified user
+	 *
+	 * @param string $user
+	 * @return stdClass
+	 */
+	public function getUser($user) {
+		return $this->getData('users/show', array(
+			'screen_name' => $user,
+		));
 	}
 
 	/**
@@ -167,9 +202,9 @@ class Tx_CwTwitter_Utility_Twitter {
 	 * @param string $method
 	 * @return array
 	 */
-	protected function getTweets($path, $params, $method = 'GET') {
+	protected function getData($path, $params, $method = 'GET') {
 		if(!function_exists('curl_init')) {
-			throw new Exception("PHP Curl functions not available on this server");
+			throw new Tx_CwTwitter_Exception_ConfigurationException("PHP Curl functions not available on this server", 1362059213);
 		}
 
 		if($method === 'GET') {
@@ -191,7 +226,7 @@ class Tx_CwTwitter_Utility_Twitter {
 		$response = curl_exec($hCurl);
 
 		if($response === False) {
-			throw new Exception(sprintf("Error in request: '%s'", curl_error($hCurl)));
+			throw new Tx_CwTwitter_Exception_RequestException(sprintf("Error in request: '%s'", curl_error($hCurl)), 1362059229);
 		}
 
 		$response = json_decode($response);
@@ -200,7 +235,7 @@ class Tx_CwTwitter_Utility_Twitter {
 			foreach($response->errors as $error) {
 				$msg .= sprintf("\n%d: %s", $error->code, $error->message);
 			}
-			throw new Exception($msg);
+			throw new Tx_CwTwitter_Exception_RequestException($msg, 1362059237);
 		}
 
 		if($method == 'GET') {
