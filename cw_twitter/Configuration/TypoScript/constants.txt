@@ -14,9 +14,14 @@ plugin.tx_cwtwitter {
 				secret =
 			}
 		}
+		# cat=plugin.tx_cwtwitter; type=string; label=Mode (timeline or search)
 		mode = timeline
+		# cat=plugin.tx_cwtwitter; type=string; label=Username (for timeline mode)
+		username =
+		# cat=plugin.tx_cwtwitter; type=string; label=Query (for search mode)
 		query =
-		limit =
+		# cat=plugin.tx_cwtwitter; type=int; label=Number of tweets to display
+		limit = 10
 	}
 	view {
 		# cat=plugin.tx_cwtwitter/file; type=string; label=Path to template root (FE)

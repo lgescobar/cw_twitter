@@ -10,10 +10,10 @@ plugin.tx_cwtwitter {
 				secret = {$plugin.tx_cwtwitter.settings.oauth.token.secret}
 			}
 		}
-		mode = timeline
-		username = cmsworks
-		query =
-		limit = 10
+		mode = {$plugin.tx_cwtwitter.settings.mode}
+		username = {$plugin.tx_cwtwitter.settings.username}
+		query = {$plugin.tx_cwtwitter.settings.query}
+		limit = {$plugin.tx_cwtwitter.settings.limit}
 	}
 	view {
 		templateRootPath = {$plugin.tx_cwtwitter.view.templateRootPath}
