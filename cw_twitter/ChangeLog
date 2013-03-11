@@ -1,3 +1,6 @@
+2013-03-11 Arjan de Pooter <arjan@cmsworks.nl>
+	* Added option to exclude replies from timeline
+
 2013-02-28 Arjan de Pooter <arjan@cmsworks.nl>
 	* Better exception handling
 	* ViewHelpers for linking to tweet, retweet, reply and favorite
