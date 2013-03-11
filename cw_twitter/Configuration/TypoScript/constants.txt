@@ -22,6 +22,8 @@ plugin.tx_cwtwitter {
 		query =
 		# cat=plugin.tx_cwtwitter; type=int; label=Number of tweets to display
 		limit = 10
+		# cat=plugin.tx_cwtwitter; type=boolean; label=Exclude replies from timeline
+		exclude_replies = 0
 	}
 	view {
 		# cat=plugin.tx_cwtwitter/file; type=string; label=Path to template root (FE)

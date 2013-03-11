@@ -14,6 +14,7 @@ plugin.tx_cwtwitter {
 		username = {$plugin.tx_cwtwitter.settings.username}
 		query = {$plugin.tx_cwtwitter.settings.query}
 		limit = {$plugin.tx_cwtwitter.settings.limit}
+		exclude_replies = {$plugin.tx_cwtwitter.settings.exclude_replies}
 	}
 	parsers {
 		urls = TEXT

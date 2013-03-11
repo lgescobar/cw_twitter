@@ -13,6 +13,7 @@
 			<label index="flexform.settings.query">Search query</label>
 			<label index="flexform.settings.username">Username</label>
 			<label index="flexform.settings.limit">Tweet limit</label>
+			<label index="flexform.settings.exclude_replies">Exclude replies</label>
 			<label index="tweetlist.empty">No (recent) tweets found</label>
 			<label index="error.request">Error occured while retrieving tweets</label>
 		</languageKey>

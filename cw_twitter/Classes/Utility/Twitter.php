@@ -85,7 +85,7 @@ class Tx_CwTwitter_Utility_Twitter {
 		$limit = intval($settings['limit']);
 		switch ($settings['mode']) {
 			case 'timeline':
-				return $twitter->getTweetsFromTimeline($settings['username'], $limit);
+				return $twitter->getTweetsFromTimeline($settings['username'], $limit, $settings['exclude_replies']);
 				break;
 			case 'search':
 				return $twitter->getTweetsFromSearch($settings['query'], $limit);
@@ -149,10 +149,13 @@ class Tx_CwTwitter_Utility_Twitter {
 	 *
 	 * @param string $user
 	 * @param int $limit
+	 * @param boolean $exclude_replies
 	 * @return array
 	 */
-	public function getTweetsFromTimeline($user = Null, $limit = Null) {
-		$params = array();
+	public function getTweetsFromTimeline($user = Null, $limit = Null, $exclude_replies = False) {
+		$params = array(
+			'exclude_replies' => $exclude_replies ? 'true':'false',
+		);
 
 		if($user) {
 			$params['screen_name'] = $user;
