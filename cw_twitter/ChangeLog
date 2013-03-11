@@ -1,5 +1,6 @@
 2013-03-11 Arjan de Pooter <arjan@cmsworks.nl>
 	* Added option to exclude replies from timeline
+	* Fixed formatting of tweets with special characters
 
 2013-02-28 Arjan de Pooter <arjan@cmsworks.nl>
 	* Better exception handling
