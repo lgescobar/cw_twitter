@@ -97,7 +97,7 @@ class Tx_CwTwitter_ViewHelpers_Format_TweetViewHelper extends Tx_Fluid_Core_View
 
 			krsort($replacements);
 			foreach($replacements as $start => $replacement) {
-				$tweettext = substr_replace($tweettext, $replacement['text'], $start, $replacement['width']);
+				$tweettext = mb_substr($tweettext, 0, $start, 'UTF-8').$replacement['text'].mb_substr($tweettext, $start + $replacement['width'], mb_strlen($tweettext, 'UTF-8'), 'UTF-8');
 			}
 
 			return $tweettext;
