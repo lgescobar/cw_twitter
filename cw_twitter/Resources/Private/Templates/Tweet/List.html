@@ -12,9 +12,9 @@
 					<div class="cwtw-Tweet">
 						<p><tw:format.tweet>{tweet}</tw:format.tweet></p>
 						<div class="cwtw-TweetMeta">
-							<a href="//twitter.com/{tweet.user.screen_name}/statuses/{tweet.id_str}" class="cwtw-TweetMeta-timestamp">
-								<f:format.date>{tweet.created_at}</f:format.date>
-							</a>
+							<tw:link.tweet class="cwtw-TweetMeta-timestamp" tweet="{tweet}">
+								<f:format.date format="d F">{tweet.created_at}</f:format.date>
+							</tw:link.tweet>
 						</div>
 					</div>
 				</div>
