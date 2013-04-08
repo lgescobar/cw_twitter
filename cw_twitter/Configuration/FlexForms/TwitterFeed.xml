@@ -35,7 +35,7 @@
 							<label>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.settings.query</label>
 							<displayCond>FIELD:settings.mode:=:search</displayCond>
 							<config>
-								<type>input</type>
+								<type>text</type>
 								<eval>required</eval>
 							</config>
 						</TCEforms>
