@@ -7,7 +7,7 @@ To add a Twitterfeed on a page, create a ContentElement and select the *Insert p
 Timeline
 ========
 
-With the Timeline mode you can display the tweets of one specific user which is specified in the *username* field. Select the number of tweets to display in the field Tweet limit.
+With the Timeline mode you can display the tweets of one specific user which is specified in the *username* field. Select the number of tweets to display in the field *Tweet limit*.
 
 If you select the box *Exclude replies* you won't see tweets which are a reply to another user.
 

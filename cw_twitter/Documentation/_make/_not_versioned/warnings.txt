@@ -1,1 +1,0 @@
-/home/arjan/Sources/t3-cw_twitter/cw_twitter/Documentation/AdministratorManual.rst:25: ERROR: Undefined substitution referenced: "name".

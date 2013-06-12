@@ -22,4 +22,4 @@ Then you need to make a Twitter App: go to `dev.twitter.com <https://dev.twitter
 Static template
 ===============
 
-When you have the Twitter App details, install the static template of |name|. Edit the constants and replace the values of *plugin.tx_cwtwitter.settings.oauth* with the corresponding values of the Twitter App.
+When you have the Twitter App details, install the static template of Twitter Feed. Edit the constants and replace the values of *plugin.tx_cwtwitter.settings.oauth* with the corresponding values of the Twitter App.
