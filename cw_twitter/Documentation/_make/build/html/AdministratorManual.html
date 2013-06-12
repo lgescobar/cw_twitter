@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Administrator Manual &mdash; cw_twitter 1.1.4 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="cw_twitter 1.1.4 documentation" href="index.html" />
+    <link rel="prev" title="Users manual" href="UserManual.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="UserManual.html" title="Users manual"
+             accesskey="P">previous</a> |</li>
+        <li><a href="Index.html">cw_twitter 1.1.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="administrator-manual">
+<h1>Administrator Manual<a class="headerlink" href="#administrator-manual" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Install the extension via the Extension Manager. After installation you can configure the lifetime of the cache in the Extension Manager which defines how often a request will be made to the Twitter API.</p>
+<div class="figure">
+<img alt="Extension Manager" src="_images/extmanager_configuration.png" />
+</div>
+</div>
+<div class="section" id="twitter-app">
+<h2>Twitter App<a class="headerlink" href="#twitter-app" title="Permalink to this headline">¶</a></h2>
+<p>Then you need to make a Twitter App: go to <a class="reference external" href="https://dev.twitter.com/apps">dev.twitter.com</a>, login with your Twitter credentials and click the button <em>Create a new application</em>. Fill in the mandatory details and submit. On the next page the details of your just-created App are shown and now you need to click <em>Create my access token</em>. After that you have all the details you need.</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/twitter_oauth.png"><img alt="Twitter App details" src="_images/twitter_oauth.png" style="width: 500px;" /></a>
+</div>
+</div>
+<div class="section" id="static-template">
+<h2>Static template<a class="headerlink" href="#static-template" title="Permalink to this headline">¶</a></h2>
+<p>When you have the Twitter App details, install the static template of <a href="#id1"><span class="problematic" id="id2">|name|</span></a>. Edit the constants and replace the values of <em>plugin.tx_cwtwitter.settings.oauth</em> with the corresponding values of the Twitter App.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="Index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Administrator Manual</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#twitter-app">Twitter App</a></li>
+<li><a class="reference internal" href="#static-template">Static template</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="UserManual.html"
+                        title="previous chapter">Users manual</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/AdministratorManual.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="UserManual.html" title="Users manual"
+             >previous</a> |</li>
+        <li><a href="Index.html">cw_twitter 1.1.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Arjan de Pooter.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

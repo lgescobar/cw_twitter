@@ -1,0 +1,25 @@
+====================
+Administrator Manual
+====================
+
+Installation
+=============
+
+Install the extension via the Extension Manager. After installation you can configure the lifetime of the cache in the Extension Manager which defines how often a request will be made to the Twitter API.
+
+.. figure:: Images/AdministratorManual/extmanager_configuration.png
+	:alt: Extension Manager
+
+Twitter App
+===========
+
+Then you need to make a Twitter App: go to `dev.twitter.com <https://dev.twitter.com/apps>`_, login with your Twitter credentials and click the button *Create a new application*. Fill in the mandatory details and submit. On the next page the details of your just-created App are shown and now you need to click *Create my access token*. After that you have all the details you need.
+
+.. figure:: Images/AdministratorManual/twitter_oauth.png
+	:width: 500px
+	:alt: Twitter App details
+
+Static template
+===============
+
+When you have the Twitter App details, install the static template of |name|. Edit the constants and replace the values of *plugin.tx_cwtwitter.settings.oauth* with the corresponding values of the Twitter App.
