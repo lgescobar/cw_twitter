@@ -1,3 +1,6 @@
+2013-07-22 Arjan de Pooter <arjan@cmsworks.nl>
+	* Updated default template to improve formatting of retweets
+
 2013-03-11 Arjan de Pooter <arjan@cmsworks.nl>
 	* Added option to exclude replies from timeline
 	* Fixed formatting of tweets with special characters
