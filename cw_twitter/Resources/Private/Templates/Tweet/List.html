@@ -4,21 +4,26 @@
 <f:section name="main">
 	<f:if condition="{tweets}">
 		<f:then>
-			<f:for each="{tweets}" as="tweet">
-				<f:alias map="{tw_user: '{f:if(condition:tweet.retweeted_status,then:tweet.retweeted_status.user,else:tweet.user)}'}">
-				<div class="cwtw-TweetWrap">
-					<div class="cwtw-TweetAvatar">
-						<img src="{tw_user.profile_image_url}" alt="{tw_user.name}" height="48" width="48" class="cwtw-TweetAvatar-image"/>
-					</div>
-					<div class="cwtw-Tweet">
-						<p><tw:format.tweet>{tweet}</tw:format.tweet></p>
-						<div class="cwtw-TweetMeta">
-							<tw:link.tweet class="cwtw-TweetMeta-timestamp" tweet="{tweet}">
-								<f:format.date format="d F">{tweet.created_at}</f:format.date>
-							</tw:link.tweet>
+			<f:for each="{tweets}" as="orig_tweet">
+				<f:alias map="{tweet: '{f:if(condition:orig_tweet.retweeted_status,then:orig_tweet.retweeted_status,else:orig_tweet)}'}">
+					<div class="cwtw-TweetWrap">
+						<div class="cwtw-TweetAvatar">
+							<img src="{tweet.user.profile_image_url}" alt="{tweet.user.name}" height="48" width="48" class="cwtw-TweetAvatar-image"/>
 						</div>
+						<div class="cwtw-Tweet">
+							<p><tw:format.tweet>{tweet}</tw:format.tweet></p>
+							<div class="cwtw-TweetMeta">
+								<tw:link.tweet class="cwtw-TweetMeta-timestamp" tweet="{tweet}">
+									<f:format.date format="d F">{tweet.created_at}</f:format.date>
+								</tw:link.tweet>
+							</div>
+						</div>
+						<f:if condition="{orig_tweet.retweeted_status}">
+							<div class="cwtw-Retweet">
+								<img src="//si0.twimg.com/images/dev/cms/intents/icons/retweet.png" alt="Retweet" /> <f:translate key="tweetlist.retweeted_by" /> <a href="https://twitter.com/{orig_tweet.user.screen_name}">{orig_tweet.user.name}</a>
+							</div>
+						</f:if>
 					</div>
-				</div>
 				</f:alias>
 			</f:for>
 		</f:then>

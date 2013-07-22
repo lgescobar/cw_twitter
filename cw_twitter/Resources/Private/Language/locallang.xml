@@ -15,6 +15,7 @@
 			<label index="flexform.settings.limit">Tweet limit</label>
 			<label index="flexform.settings.exclude_replies">Exclude replies</label>
 			<label index="tweetlist.empty">No (recent) tweets found</label>
+			<label index="tweetlist.retweeted_by">Retweeted by</label>
 			<label index="error.request">Error occured while retrieving tweets</label>
 		</languageKey>
 	</data>
