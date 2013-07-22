@@ -1,0 +1,17 @@
+plugin.tx_cwtwitter.libs {
+	list = USER
+	list {
+		userFunc = tx_extbase_core_bootstrap->run
+		extensionName = CwTwitter
+		pluginName = Pi1
+		switchableControllerActions {
+			Tweet {
+				1 = list
+			}
+		}
+		settings =< plugin.tx_cwtwitter.settings
+		parsers =< plugin.tx_cwtwitter.parsers
+		view =< plugin.tx_cwtwitter.view
+		persistence =< plugin.tx_cwtwitter.persistence
+	}
+}
