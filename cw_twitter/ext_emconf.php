@@ -3,7 +3,7 @@
 /***************************************************************
  * Extension Manager/Repository config file for ext "cw_twitter".
  *
- * Auto generated 22-07-2013 13:56
+ * Auto generated 24-07-2013 15:04
  *
  * Manual updates:
  * Only the data in the array - everything else is removed by next
@@ -27,7 +27,7 @@ $EM_CONF[$_EXTKEY] = array (
 	'modify_tables' => '',
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
-	'version' => '1.1.5',
+	'version' => '1.1.6',
 	'constraints' => 
 	array (
 		'depends' => 
