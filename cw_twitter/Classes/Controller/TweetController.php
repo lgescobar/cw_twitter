@@ -31,6 +31,15 @@
  *
  */
 class Tx_CwTwitter_Controller_TweetController extends Tx_Extbase_MVC_Controller_ActionController {
+
+	/**
+	 * @param Tx_Extbase_MVC_View_ViewInterface $view
+	 * @return void
+	 */
+	protected function initializeView(Tx_Extbase_MVC_View_ViewInterface $view) {
+		$view->assign('contentObjectData', $this->configurationManager->getContentObject()->data);
+	}
+
 	/**
 	 * List tweets
 	 *
