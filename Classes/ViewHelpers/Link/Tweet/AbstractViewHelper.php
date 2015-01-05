@@ -66,7 +66,7 @@ abstract class Tx_CwTwitter_ViewHelpers_Link_Tweet_AbstractViewHelper extends Tx
 	 */
 	public function render($tweet) {
 		$this->tag->setContent($this->renderChildren());
-		$path = str_replace(array('{id}', '{user}'), array($tweet->id, $tweet->user->screen_name), $this->path);
+		$path = str_replace(array('{id}', '{id_str}', '{user}'), array($tweet->id, $tweet->id_str, $tweet->user->screen_name), $this->path);
 		$this->tag->addAttribute('href', $this->baseUrl.$path);
 
 		return $this->tag->render();

@@ -31,6 +31,6 @@
  *
  */
 class Tx_CwTwitter_ViewHelpers_Link_TweetViewHelper extends Tx_CwTwitter_ViewHelpers_Link_Tweet_AbstractViewHelper {
-	protected $path = '{user}/status/{id}';
+	protected $path = '{user}/status/{id_str}';
 }
 ?>
