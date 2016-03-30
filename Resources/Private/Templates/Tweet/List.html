@@ -20,7 +20,15 @@
 						</div>
 						<f:if condition="{orig_tweet.retweeted_status}">
 							<div class="cwtw-Retweet">
-								<f:image src="EXT:cw_twitter/Resources/Public/Icons/retweet.png" alt="Retweet" /><f:translate key="tweetlist.retweeted_by" /> <a href="https://twitter.com/{orig_tweet.user.screen_name}">{orig_tweet.user.name}</a>
+								<f:if condition="{settings.enhanced_privacy}">
+									<f:then>
+										<f:image src="EXT:cw_twitter/Resources/Public/Icons/retweet.png" alt="Retweet"></f:image>
+									</f:then>
+									<f:else>
+										<img src="//si0.twimg.com/images/dev/cms/intents/icons/retweet.png" alt="Retweet" />
+									</f:else>
+								</f:if>
+								<f:translate key="tweetlist.retweeted_by" /> <a href="https://twitter.com/{orig_tweet.user.screen_name}">{orig_tweet.user.name}</a>
 							</div>
 						</f:if>
 					</div>
