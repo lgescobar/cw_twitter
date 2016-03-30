@@ -164,7 +164,10 @@ class Tx_CwTwitter_Utility_Twitter {
 			$params['count'] = $limit;
 		}
 
-		return $this->getData('statuses/user_timeline', $params);
+		$tweets = $this->getData('statuses/user_timeline', $params);
+		$this->saveTweetPicturesLocally($tweets);
+
+		return $tweets;
 	}
 
 	/**
@@ -183,7 +186,10 @@ class Tx_CwTwitter_Utility_Twitter {
 			$params['count'] = $limit;
 		}
 
-		return $this->getData('search/tweets', $params)->statuses;
+		$tweets = $this->getData('search/tweets', $params)->statuses;
+		$this->saveTweetPicturesLocally($tweets);
+
+		return $tweets;
 	}
 
 	/**
@@ -259,5 +265,49 @@ class Tx_CwTwitter_Utility_Twitter {
 	protected function calculateCacheKey($path, $params) {
 		return md5(sprintf('%s|%s', $path, implode(',', $params)));
 	}
+
+	/**
+     * Saves profile pictures locally
+     *
+     * @param array $tweets
+     * @return void
+     */
+    protected function saveTweetPicturesLocally(array &$tweets) {
+        foreach ($tweets as $tweet) {
+            if(!empty($tweet->user->profile_image_url)) {
+                $tweet->user->profile_image_url = $this->saveUserPic($tweet->user->profile_image_url);
+            }
+
+            if(!empty($tweet->retweeted_status->user->profile_image_url)) {
+                $tweet->retweeted_status->user->profile_image_url = $this->saveUserPic($tweet->retweeted_status->user->profile_image_url);
+            }
+        }
+    }
+
+    /**
+     * Saves the profile picture to typo3temp/cw_twitter/
+     *
+     * @param string $url URL of the picture
+     * @return string path to the new picture on the server
+     */
+    protected function saveUserPic($url) {
+        // directory to store the images
+        $tempPath = 'typo3temp/cw_twitter/';
+
+        if(!file_exists($tempPath)) {
+            mkdir($tempPath);
+        }
+
+        // get the upstream filename
+        $filename = basename($url);
+
+        $tempFile = $tempPath . $filename;
+
+        if(!file_exists($tempFile)) {
+            $contents = file_get_contents($url);
+            file_put_contents($tempFile, $contents);
+        }
+        return $tempFile;
+    }
 }
 ?>
