@@ -24,6 +24,8 @@ plugin.tx_cwtwitter {
 		limit = 10
 		# cat=plugin.tx_cwtwitter; type=boolean; label=Exclude replies from timeline
 		exclude_replies = 0
+		# cat=plugin.tx_cwtwitter; type=boolean; label=Prevent client-side requests to Twitter
+		enhanced_privacy = 0
 	}
 	view {
 		# cat=plugin.tx_cwtwitter/file; type=string; label=Path to template root (FE)

@@ -15,6 +15,7 @@ plugin.tx_cwtwitter {
 		query = {$plugin.tx_cwtwitter.settings.query}
 		limit = {$plugin.tx_cwtwitter.settings.limit}
 		exclude_replies = {$plugin.tx_cwtwitter.settings.exclude_replies}
+		enhanced_privacy = {$plugin.tx_cwtwitter.settings.enhanced_privacy}
 	}
 	parsers {
 		urls = TEXT
