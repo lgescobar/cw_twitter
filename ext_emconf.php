@@ -27,7 +27,7 @@ $EM_CONF[$_EXTKEY] = array (
 	'modify_tables' => '',
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
-	'version' => '1.1.9',
+	'version' => '1.2.0',
 	'autoload' =>
 		array(
 			'classmap' => array('Classes')
@@ -37,7 +37,7 @@ $EM_CONF[$_EXTKEY] = array (
 	array (
 		'depends' =>
 		array (
-			'typo3' => '7.6.0-7.6.99',
+			'typo3' => '6.2.0-7.99.99',
 		),
 		'conflicts' =>
 		array (
