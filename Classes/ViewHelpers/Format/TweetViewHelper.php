@@ -30,7 +30,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_CwTwitter_ViewHelpers_Format_TweetViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_CwTwitter_ViewHelpers_Format_TweetViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * @var array
@@ -38,17 +38,17 @@ class Tx_CwTwitter_ViewHelpers_Format_TweetViewHelper extends Tx_Fluid_Core_View
 	protected $typoScriptSetup;
 
 	/**
-	 * @var Tx_Extbase_Configuration_ConfigurationManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
 	 */
 	protected $configurationManager;
 
 	/**
-	 * @param Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager
+	 * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
 	 * @return void
 	 */
-	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager) {
+	public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager) {
 		$this->configurationManager = $configurationManager;
-		$this->typoScriptSetup = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+		$this->typoScriptSetup = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 	}
 
 
@@ -134,7 +134,7 @@ class Tx_CwTwitter_ViewHelpers_Format_TweetViewHelper extends Tx_Fluid_Core_View
 	protected function getDataFromParser($path, $data) {
 		list($type, $tsObj) = $this->getTypoScriptObject($path);
 
-		$contentObject = t3lib_div::makeInstance('tslib_cObj');
+		$contentObject = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer');
 		$contentObject->start(get_object_vars($data));
 
 		return $contentObject->cObjGetSingle($type, $tsObj);

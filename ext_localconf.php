@@ -7,9 +7,9 @@ if (!is_array($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cwtwitt
     $TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cwtwitter_queries'] = array();
 }
 if (!isset($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cwtwitter_queries']['frontend'])) {
-    $TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cwtwitter_queries']['frontend'] = 't3lib_cache_frontend_VariableFrontend';
+    $TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cwtwitter_queries']['frontend'] = '\\TYPO3\\CMS\Core\\Cache\\Frontend\\VariableFrontend';
 }
-if (t3lib_utility_VersionNumber::convertVersionNumberToInteger(TYPO3_version) < '4006000') {
+if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) < '4006000') {
     if (!isset($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cwtwitter_queries']['backend'])) {
         $TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cwtwitter_queries']['backend'] = 't3lib_cache_backend_DbBackend';
     }
@@ -24,7 +24,7 @@ if (t3lib_utility_VersionNumber::convertVersionNumberToInteger(TYPO3_version) < 
     }
 }
 
-Tx_Extbase_Utility_Extension::configurePlugin(
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 	$_EXTKEY,
 	'Pi1',
 	array(
