@@ -30,13 +30,13 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_CwTwitter_Controller_TweetController extends Tx_Extbase_MVC_Controller_ActionController {
+class Tx_CwTwitter_Controller_TweetController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
 	 * @param Tx_Extbase_MVC_View_ViewInterface $view
 	 * @return void
 	 */
-	protected function initializeView(Tx_Extbase_MVC_View_ViewInterface $view) {
+	protected function initializeView($view) {
 		$view->assign('contentObjectData', $this->configurationManager->getContentObject()->data);
 	}
 

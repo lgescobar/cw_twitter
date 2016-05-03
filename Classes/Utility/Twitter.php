@@ -23,7 +23,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
 
-require_once(t3lib_extMgm::extPath('cw_twitter').'Classes/Contrib/OAuth.php');
+//require_once(t3lib_extMgm::extPath('cw_twitter').'Classes/Contrib/OAuth.php');
 
 /**
  *
@@ -108,12 +108,14 @@ class Tx_CwTwitter_Utility_Twitter {
 	 * @return void
 	 */
 	public function __construct() {
-		t3lib_cache::initializeCachingFramework();
+//		t3lib_cache::initializeCachingFramework();
+
+		$cacheManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
         try {
-            $this->cache = $GLOBALS['typo3CacheManager']->getCache('cwtwitter_queries');
+            $this->cache = $cacheManager->getCache('cwtwitter_queries');
         }
         catch (t3lib_cache_exception_NoSuchCache $e) {
-            $this->cache = $GLOBALS['typo3CacheFactory']->create(
+            $this->cache = $cacheManager->create(
                 'cwtwitter_queries',
                 $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cwtwitter_queries']['frontend'],
                 $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cwtwitter_queries']['backend'],

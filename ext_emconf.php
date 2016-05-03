@@ -12,11 +12,11 @@
 
 $EM_CONF[$_EXTKEY] = array (
 	'title' => 'Twitter feed',
-	'description' => 'Show tweets from user or search query on frontend. Compatible with the new Twitter API (1.1).',
+	'description' => 'Show tweets from user or search query on frontend. Compatible with TYPO3 7.6.X',
 	'category' => 'plugin',
 	'author' => 'Arjan de Pooter',
-	'author_email' => 'arjan@cmsworks.nl',
-	'author_company' => 'CMS Works',
+	'author_email' => 'mail@arjandepooter.nl',
+	'author_company' => '',
 	'shy' => '',
 	'priority' => '',
 	'module' => '',
@@ -28,14 +28,16 @@ $EM_CONF[$_EXTKEY] = array (
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
 	'version' => '1.1.9',
+	'autoload' =>
+		array(
+			'classmap' => array('Classes')
+		  ),
 	'constraints' =>
 
 	array (
 		'depends' =>
 		array (
-			'extbase' => '1.3',
-			'fluid' => '1.3',
-			'typo3' => '4.5.0-6.2.99',
+			'typo3' => '7.6.0-7.6.99',
 		),
 		'conflicts' =>
 		array (
