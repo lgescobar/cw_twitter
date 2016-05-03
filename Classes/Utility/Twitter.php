@@ -85,10 +85,10 @@ class Tx_CwTwitter_Utility_Twitter {
 		$limit = intval($settings['limit']);
 		switch ($settings['mode']) {
 			case 'timeline':
-				return $twitter->getTweetsFromTimeline($settings['username'], $limit, $settings['exclude_replies']);
+				return $twitter->getTweetsFromTimeline($settings['username'], $limit, $settings['exclude_replies'], $settings['enhanced_privacy']);
 				break;
 			case 'search':
-				return $twitter->getTweetsFromSearch($settings['query'], $limit);
+				return $twitter->getTweetsFromSearch($settings['query'], $limit, $settings['enhanced_privacy']);
 				break;
 			default:
 				throw new Tx_CwTwitter_Exception_ConfigurationException("Invalid mode specified.", 1362059199);
@@ -152,7 +152,7 @@ class Tx_CwTwitter_Utility_Twitter {
 	 * @param boolean $exclude_replies
 	 * @return array
 	 */
-	public function getTweetsFromTimeline($user = Null, $limit = Null, $exclude_replies = False) {
+	public function getTweetsFromTimeline($user = Null, $limit = Null, $exclude_replies = False, $enhanced_privacy = False) {
 		$params = array(
 			'exclude_replies' => $exclude_replies ? 'true':'false',
 		);
@@ -164,7 +164,12 @@ class Tx_CwTwitter_Utility_Twitter {
 			$params['count'] = $limit;
 		}
 
-		return $this->getData('statuses/user_timeline', $params);
+		$tweets = $this->getData('statuses/user_timeline', $params);
+		if ($enhanced_privacy) {
+            $this->saveTweetPicturesLocally($tweets);
+        }
+
+		return $tweets;
 	}
 
 	/**
@@ -174,7 +179,7 @@ class Tx_CwTwitter_Utility_Twitter {
 	 * @param int $limit
 	 * @return array
 	 */
-	public function getTweetsFromSearch($query, $limit = Null) {
+	public function getTweetsFromSearch($query, $limit = Null, $enhanced_privacy = False) {
 		$params = array(
 			'q' => $query,
 		);
@@ -183,7 +188,12 @@ class Tx_CwTwitter_Utility_Twitter {
 			$params['count'] = $limit;
 		}
 
-		return $this->getData('search/tweets', $params)->statuses;
+		$tweets = $this->getData('search/tweets', $params)->statuses;
+		if ($enhanced_privacy) {
+            $this->saveTweetPicturesLocally($tweets);
+        }
+
+		return $tweets;
 	}
 
 	/**
@@ -259,5 +269,49 @@ class Tx_CwTwitter_Utility_Twitter {
 	protected function calculateCacheKey($path, $params) {
 		return md5(sprintf('%s|%s', $path, implode(',', $params)));
 	}
+
+	/**
+     * Saves profile pictures locally
+     *
+     * @param array $tweets
+     * @return void
+     */
+    protected function saveTweetPicturesLocally(array &$tweets) {
+        foreach ($tweets as $tweet) {
+            if(!empty($tweet->user->profile_image_url)) {
+                $tweet->user->profile_image_url = $this->saveUserPic($tweet->user->profile_image_url);
+            }
+
+            if(!empty($tweet->retweeted_status->user->profile_image_url)) {
+                $tweet->retweeted_status->user->profile_image_url = $this->saveUserPic($tweet->retweeted_status->user->profile_image_url);
+            }
+        }
+    }
+
+    /**
+     * Saves the profile picture to typo3temp/cw_twitter/
+     *
+     * @param string $url URL of the picture
+     * @return string path to the new picture on the server
+     */
+    protected function saveUserPic($url) {
+        // directory to store the images
+        $tempPath = 'typo3temp/cw_twitter/';
+
+        if(!file_exists($tempPath)) {
+            mkdir($tempPath);
+        }
+
+        // get the upstream filename
+        $filename = basename($url);
+
+        $tempFile = $tempPath . $filename;
+
+        if(!file_exists($tempFile)) {
+            $contents = file_get_contents($url);
+            file_put_contents($tempFile, $contents);
+        }
+        return $tempFile;
+    }
 }
 ?>
