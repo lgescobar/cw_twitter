@@ -23,7 +23,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
 
-//require_once(t3lib_extMgm::extPath('cw_twitter').'Classes/Contrib/OAuth.php');
+require_once(__DIR__.'/../Contrib/OAuth.php');
 
 /**
  *
