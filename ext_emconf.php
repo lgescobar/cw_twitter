@@ -20,14 +20,14 @@ $EM_CONF[$_EXTKEY] = array (
 	'shy' => '',
 	'priority' => '',
 	'module' => '',
-	'state' => 'beta',
+	'state' => 'stable',
 	'internal' => '',
 	'uploadfolder' => 0,
 	'createDirs' => '',
 	'modify_tables' => '',
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
-	'version' => '1.2.0',
+	'version' => '1.2.1-dev',
 	'autoload' =>
 		array(
 			'classmap' => array('Classes')

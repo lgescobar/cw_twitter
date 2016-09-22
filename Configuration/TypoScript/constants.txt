@@ -35,8 +35,4 @@ plugin.tx_cwtwitter {
 		# cat=plugin.tx_cwtwitter/file; type=string; label=Path to template layouts (FE)
 		layoutRootPath = EXT:cw_twitter/Resources/Private/Layouts/
 	}
-	persistence {
-		# cat=plugin.tx_cwtwitter//a; type=string; label=Default storage PID
-		storagePid =
-	}
 }

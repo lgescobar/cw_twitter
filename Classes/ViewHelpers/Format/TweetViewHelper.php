@@ -1,4 +1,6 @@
 <?php
+namespace CW\CwTwitter\ViewHelpers\Format;
+
 /* * *************************************************************
  *  Copyright notice
  *
@@ -23,6 +25,8 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
 
+use CW\CwTwitter\ViewHelpers\Link\Tweet\AbstractViewHelper;
+
 /**
  *
  *
@@ -30,114 +34,114 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_CwTwitter_ViewHelpers_Format_TweetViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class TweetViewHelper extends AbstractViewHelper
+{
+    /**
+     * @var array
+     */
+    protected $typoScriptSetup;
+    /**
+     * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
+     */
+    protected $configurationManager;
 
-	/**
-	 * @var array
-	 */
-	protected $typoScriptSetup;
+    /**
+     * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
+     * @return void
+     */
+    public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager)
+    {
+        $this->configurationManager = $configurationManager;
+        $this->typoScriptSetup = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+    }
 
-	/**
-	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
-	 */
-	protected $configurationManager;
+    /**
+     * Format the entities (hashtags, urls, usermentions, media) in the tweet
+     *
+     * @param stdClass $tweet The tweet object
+     * @param string $urlParser TypoScript path for parsing urls
+     * @param string $hashtagParser TypoScript path for parsing urls
+     * @param string $mentionParser TypoScript path for parsing urls
+     * @param string $mediaParser TypoScript path for parsing urls
+     * @return string
+     */
+    public function render($tweet = Null, $urlParser = 'plugin.tx_cwtwitter.parsers.urls', $hashtagParser = 'plugin.tx_cwtwitter.parsers.hashtags', $mentionParser = 'plugin.tx_cwtwitter.parsers.mentions', $mediaParser = 'plugin.tx_cwtwitter.parsers.media')
+    {
+        if (is_null($tweet)) {
+            $tweet = $this->renderChildren();
+        }
 
-	/**
-	 * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
-	 * @return void
-	 */
-	public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager) {
-		$this->configurationManager = $configurationManager;
-		$this->typoScriptSetup = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-	}
+        if (isset($tweet->text)) {
+            $tweettext = $tweet->text;
+        } else {
+            throw new Tx_Fluid_Core_ViewHelper_Exception("Tweet object doesn't contain text property.", 1362042983);
+        }
 
+        if (isset($tweet->entities)) {
+            $entityTypes = array(
+                'hashtags' => $hashtagParser,
+                'urls' => $urlParser,
+                'user_mentions' => $mentionParser,
+                'media' => $mediaParser,
+            );
 
-	/**
-	 * Format the entities (hashtags, urls, usermentions, media) in the tweet
-	 *
-	 * @param stdClass $tweet The tweet object
-	 * @param string $urlParser TypoScript path for parsing urls
-	 * @param string $hashtagParser TypoScript path for parsing urls
-	 * @param string $mentionParser TypoScript path for parsing urls
-	 * @param string $mediaParser TypoScript path for parsing urls
-	 * @return string
-	 */
-	public function render($tweet = Null, $urlParser = 'plugin.tx_cwtwitter.parsers.urls', $hashtagParser = 'plugin.tx_cwtwitter.parsers.hashtags', $mentionParser = 'plugin.tx_cwtwitter.parsers.mentions', $mediaParser = 'plugin.tx_cwtwitter.parsers.media') {
-		if(is_null($tweet)) {
-			$tweet = $this->renderChildren();
-		}
+            $replacements = array();
+            foreach ($entityTypes as $type => $parsePath) {
+                if (isset($tweet->entities->$type) && is_array($tweet->entities->$type)) {
+                    foreach ($tweet->entities->$type as $entity) {
+                        list($start, $stop) = $entity->indices;
+                        $replacements[$start] = array(
+                            'text' => $this->getDataFromParser($parsePath, $entity),
+                            'width' => $stop - $start,
+                        );
+                    }
+                }
+            }
 
-		if(isset($tweet->text)) {
-			$tweettext = $tweet->text;
-		}
-		else {
-			throw new Tx_Fluid_Core_ViewHelper_Exception("Tweet object doesn't contain text property.", 1362042983);
-		}
+            krsort($replacements);
+            foreach ($replacements as $start => $replacement) {
+                $tweettext = mb_substr($tweettext, 0, $start, 'UTF-8') . $replacement['text'] . mb_substr($tweettext, $start + $replacement['width'], mb_strlen($tweettext, 'UTF-8'), 'UTF-8');
+            }
 
-		if(isset($tweet->entities)) {
-			$entityTypes = array(
-				'hashtags' => $hashtagParser,
-				'urls' => $urlParser,
-				'user_mentions' => $mentionParser,
-				'media' => $mediaParser,
-			);
+            return $tweettext;
+        }
+    }
 
-			$replacements = array();
-			foreach($entityTypes as $type => $parsePath) {
-				if(isset($tweet->entities->$type) && is_array($tweet->entities->$type)) {
-					foreach($tweet->entities->$type as $entity) {
-						list($start, $stop) = $entity->indices;
-						$replacements[$start] = array(
-							'text' => $this->getDataFromParser($parsePath, $entity),
-							'width' => $stop-$start,
-						);
-					}
-				}
-			}
+    /**
+     * @param string $path
+     * @return array
+     */
+    protected function getTypoScriptObject($path)
+    {
+        $setup = $this->typoScriptSetup;
+        $segments = explode('.', $path);
+        $lastSegment = array_pop($segments);
 
-			krsort($replacements);
-			foreach($replacements as $start => $replacement) {
-				$tweettext = mb_substr($tweettext, 0, $start, 'UTF-8').$replacement['text'].mb_substr($tweettext, $start + $replacement['width'], mb_strlen($tweettext, 'UTF-8'), 'UTF-8');
-			}
+        foreach ($segments as $segment) {
+            if (isset($setup[$segment . '.'])) {
+                $setup = $setup[$segment . '.'];
+            } else {
+                throw new Tx_Fluid_Core_ViewHelper_Exception('TypoScript object path "' . htmlspecialchars($path) . '" does not exist', 1362046927);
+            }
+        }
 
-			return $tweettext;
-		}
-	}
+        return array($setup[$lastSegment], $setup[$lastSegment . '.']);
+    }
 
-	/**
-	 * @param string $path
-	 * @return array
-	 */
-	protected function getTypoScriptObject($path) {
-		$setup = $this->typoScriptSetup;
-		$segments = explode('.', $path);
-		$lastSegment = array_pop($segments);
+    /**
+     * @param string $path Path to the TS-object
+     * @param stdClass $data The data to use
+     * @return string
+     */
+    protected function getDataFromParser($path, $data)
+    {
+        list($type, $tsObj) = $this->getTypoScriptObject($path);
 
-		foreach($segments as $segment) {
-			if(isset($setup[$segment.'.'])) {
-				$setup = $setup[$segment.'.'];
-			}
-			else {
-				throw new Tx_Fluid_Core_ViewHelper_Exception('TypoScript object path "' . htmlspecialchars($path) . '" does not exist', 1362046927);
+        $contentObject = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer');
+        $contentObject->start(get_object_vars($data));
 
-			}
-		}
-
-		return array($setup[$lastSegment], $setup[$lastSegment.'.']);
-	}
-
-	/**
-	 * @param string $path Path to the TS-object
-	 * @param stdClass $data The data to use
-	 * @return string
-	 */
-	protected function getDataFromParser($path, $data) {
-		list($type, $tsObj) = $this->getTypoScriptObject($path);
-
-		$contentObject = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer');
-		$contentObject->start(get_object_vars($data));
-
-		return $contentObject->cObjGetSingle($type, $tsObj);
-	}
+        return $contentObject->cObjGetSingle($type, $tsObj);
+    }
 }
+
 ?>

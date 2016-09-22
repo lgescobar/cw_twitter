@@ -1,4 +1,6 @@
 <?php
+namespace CW\CwTwitter\Controller;
+
 /* * *************************************************************
  *  Copyright notice
  *
@@ -22,6 +24,12 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
+use CW\CwTwitter\Exception\ConfigurationException;
+use CW\CwTwitter\Exception\RequestException;
+use CW\CwTwitter\Utility\Twitter;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 
 /**
  *
@@ -30,39 +38,37 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_CwTwitter_Controller_TweetController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
+class TweetController extends ActionController
+{
+    /**
+     * @param ViewInterface $view
+     * @return void
+     */
+    protected function initializeView($view)
+    {
+        $view->assign('contentObjectData', $this->configurationManager->getContentObject()->data);
+    }
 
-	/**
-	 * @param Tx_Extbase_MVC_View_ViewInterface $view
-	 * @return void
-	 */
-	protected function initializeView($view) {
-		$view->assign('contentObjectData', $this->configurationManager->getContentObject()->data);
-	}
-
-	/**
-	 * List tweets
-	 *
-	 * @return void
-	 */
-	public function listAction() {
-		try {
-			$tweets = Tx_CwTwitter_Utility_Twitter::getTweetsFromSettings($this->settings);
-			if($this->settings['mode'] == 'timeline') {
-				$this->view->assign('user', Tx_CwTwitter_Utility_Twitter::getUserFromSettings($this->settings));
-			}
-		}
-		catch(Tx_CwTwitter_Exception_ConfigurationException $e) {
-			return $e->getMessage();
-		}
-		catch(Tx_CwTwitter_Exception_RequestException $e) {
-			t3lib_div::sysLog($e->getMessage(), 'cw_twitter', 3);
-			$this->view->assign('error', $e);
-		}
-
-		$this->view->assignMultiple(array(
-			'tweets' => $tweets,
-		));
-	}
+    /**
+     * List tweets
+     *
+     * @return void
+     */
+    public function listAction()
+    {
+        try {
+            $tweets = Twitter::getTweetsFromSettings($this->settings);
+            $this->view->assign('tweets', $tweets);
+            if ($this->settings['mode'] == 'timeline') {
+                $this->view->assign('user', Twitter::getUserFromSettings($this->settings));
+            }
+        } catch (ConfigurationException $e) {
+            return $e->getMessage();
+        } catch (RequestException $e) {
+            GeneralUtility::sysLog($e->getMessage(), 'cw_twitter', GeneralUtility::SYSLOG_SEVERITY_ERROR);
+            $this->view->assign('error', $e);
+        }
+    }
 }
+
 ?>

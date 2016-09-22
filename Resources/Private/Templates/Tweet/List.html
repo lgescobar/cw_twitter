@@ -1,35 +1,37 @@
-{namespace tw=Tx_CwTwitter_ViewHelpers}
-<f:layout name="Default" />
+<div xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+	 xmlns:tw="http://typo3.org/ns/CW/CwTwitter/ViewHelpers">
+	<f:layout name="Default" />
 
-<f:section name="main">
-	<f:if condition="{tweets}">
-		<f:then>
-			<f:for each="{tweets}" as="orig_tweet">
-				<f:alias map="{tweet: '{f:if(condition:orig_tweet.retweeted_status,then:orig_tweet.retweeted_status,else:orig_tweet)}'}">
-					<div class="cwtw-TweetWrap">
-						<div class="cwtw-TweetAvatar">
-							<img src="{tweet.user.profile_image_url}" alt="{tweet.user.name}" height="48" width="48" class="cwtw-TweetAvatar-image"/>
-						</div>
-						<div class="cwtw-Tweet">
-							<p><tw:format.tweet>{tweet}</tw:format.tweet></p>
-							<div class="cwtw-TweetMeta">
-								<tw:link.tweet class="cwtw-TweetMeta-timestamp" tweet="{tweet}">
-									<f:format.date format="d F">{tweet.created_at}</f:format.date>
-								</tw:link.tweet>
+	<f:section name="main">
+		<f:if condition="{tweets}">
+			<f:then>
+				<f:for each="{tweets}" as="orig_tweet">
+					<f:alias map="{tweet: '{f:if(condition:orig_tweet.retweeted_status,then:orig_tweet.retweeted_status,else:orig_tweet)}'}">
+						<div class="cwtw-TweetWrap">
+							<div class="cwtw-TweetAvatar">
+								<img src="{tweet.user.profile_image_url}" alt="{tweet.user.name}" height="48" width="48" class="cwtw-TweetAvatar-image"/>
 							</div>
-						</div>
-						<f:if condition="{orig_tweet.retweeted_status}">
-							<div class="cwtw-Retweet">
-								<f:image src="EXT:cw_twitter/Resources/Public/Icons/retweet.png" alt="Retweet"></f:image>
-								<f:translate key="tweetlist.retweeted_by" /> <a href="https://twitter.com/{orig_tweet.user.screen_name}">{orig_tweet.user.name}</a>
+							<div class="cwtw-Tweet">
+								<p><tw:format.tweet>{tweet}</tw:format.tweet></p>
+								<div class="cwtw-TweetMeta">
+									<tw:link.tweet class="cwtw-TweetMeta-timestamp" tweet="{tweet}">
+										<f:format.date format="d F">{tweet.created_at}</f:format.date>
+									</tw:link.tweet>
+								</div>
 							</div>
-						</f:if>
-					</div>
-				</f:alias>
-			</f:for>
-		</f:then>
-		<f:else>
-			<f:translate key="tweetlist.empty" />
-		</f:else>
-	</f:if>
-</f:section>
+							<f:if condition="{orig_tweet.retweeted_status}">
+								<div class="cwtw-Retweet">
+									<f:image src="EXT:cw_twitter/Resources/Public/Icons/retweet.png" alt="Retweet"></f:image>
+									<f:translate key="tweetlist.retweeted_by" /> <a href="https://twitter.com/{orig_tweet.user.screen_name}">{orig_tweet.user.name}</a>
+								</div>
+							</f:if>
+						</div>
+					</f:alias>
+				</f:for>
+			</f:then>
+			<f:else>
+				<f:translate key="tweetlist.empty" />
+			</f:else>
+		</f:if>
+	</f:section>
+</div>
