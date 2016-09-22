@@ -1,4 +1,5 @@
 <?php
+namespace CW\CwTwitter\ViewHelpers\Link\Tweet;
 /* * *************************************************************
  *  Copyright notice
  *
@@ -30,7 +31,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_CwTwitter_ViewHelpers_Link_Tweet_RetweetViewHelper extends Tx_CwTwitter_ViewHelpers_Link_Tweet_AbstractViewHelper {
+class RetweetViewHelper extends AbstractViewHelper  {
 	protected $path = 'intent/retweet?tweet_id={id}';
 }
 ?>

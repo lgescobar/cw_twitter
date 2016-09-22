@@ -1,4 +1,6 @@
 <?php
+namespace CW\CwTwitter\ViewHelpers\Link\Tweet;
+
 /* * *************************************************************
  *  Copyright notice
  *
@@ -22,6 +24,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
  *
@@ -30,7 +33,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-abstract class Tx_CwTwitter_ViewHelpers_Link_Tweet_AbstractViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper {
+abstract class AbstractViewHelper extends AbstractTagBasedViewHelper {
 	/**
 	 * @var string
 	 */

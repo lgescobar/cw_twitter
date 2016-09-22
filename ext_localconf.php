@@ -11,7 +11,7 @@ if (!isset($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cwtwitter_
 }
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	$_EXTKEY,
+    'CW.' . $_EXTKEY,
 	'Pi1',
 	array(
 		'Tweet' => 'list',

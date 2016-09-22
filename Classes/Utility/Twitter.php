@@ -1,4 +1,6 @@
 <?php
+namespace CW\CwTwitter\Utility;
+
 /* * *************************************************************
  *  Copyright notice
  *
@@ -32,7 +34,7 @@ require_once(__DIR__.'/../Contrib/OAuth.php');
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_CwTwitter_Utility_Twitter {
+class Twitter {
 
 	/**
 	 * @var t3lib_cache_frontend_AbstractFrontend
@@ -40,12 +42,12 @@ class Tx_CwTwitter_Utility_Twitter {
 	protected $cache;
 
 	/**
-	 * @var OAuthConsumer
+	 * @var \OAuthConsumer
 	 */
 	protected $consumer;
 
 	/**
-	 * @var OAuthToken
+	 * @var \OAuthToken
 	 */
 	protected $token;
 
@@ -60,7 +62,7 @@ class Tx_CwTwitter_Utility_Twitter {
 	 * Construct Twitter-object from settings
 	 *
 	 * @param array $settings
-	 * @return Tx_CwTwitter_Utility_Twitter
+	 * @return Twitter
 	 */
 	public static function getTwitterFromSettings($settings) {
 		if(!$settings['oauth']['consumer']['key'] || !$settings['oauth']['consumer']['secret'] || !$settings['oauth']['token']['key'] || !$settings['oauth']['token']['secret']) {
@@ -68,7 +70,7 @@ class Tx_CwTwitter_Utility_Twitter {
 
 		}
 
-		$twitter = new Tx_CwTwitter_Utility_Twitter();
+		$twitter = new Twitter();
 		$twitter->setConsumer($settings['oauth']['consumer']['key'], $settings['oauth']['consumer']['secret']);
 		$twitter->setToken($settings['oauth']['token']['key'], $settings['oauth']['token']['secret']);
 
@@ -132,7 +134,7 @@ class Tx_CwTwitter_Utility_Twitter {
 	 * @return void
 	 */
 	public function setConsumer($key, $secret) {
-		$this->consumer = new OAuthConsumer($key, $secret);
+		$this->consumer = new \OAuthConsumer($key, $secret);
 	}
 
 	/**
@@ -143,7 +145,7 @@ class Tx_CwTwitter_Utility_Twitter {
 	 * @return void
 	 */
 	public function setToken($key, $secret) {
-		$this->token = new OAuthToken($key, $secret);
+		$this->token = new \OAuthToken($key, $secret);
 	}
 
 	/**
@@ -228,8 +230,8 @@ class Tx_CwTwitter_Utility_Twitter {
 			}
 		}
 
-		$request = OAuthRequest::from_consumer_and_token($this->consumer, $this->token, $method, $this->api_url.$path.'.json', $params);
-		$request->sign_request(new OAuthSignatureMethod_HMAC_SHA1(), $this->consumer, $this->token);
+		$request = \OAuthRequest::from_consumer_and_token($this->consumer, $this->token, $method, $this->api_url.$path.'.json', $params);
+		$request->sign_request(new \OAuthSignatureMethod_HMAC_SHA1(), $this->consumer, $this->token);
 
 		$hCurl = curl_init($request->to_url());
 		curl_setopt_array($hCurl, array(

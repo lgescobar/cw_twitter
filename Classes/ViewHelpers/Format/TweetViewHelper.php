@@ -1,4 +1,5 @@
 <?php
+namespace CW\CwTwitter\ViewHelpers\Format;
 /* * *************************************************************
  *  Copyright notice
  *
@@ -22,6 +23,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
+use CW\CwTwitter\ViewHelpers\Link\Tweet\AbstractViewHelper;
 
 /**
  *
@@ -30,7 +32,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_CwTwitter_ViewHelpers_Format_TweetViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class TweetViewHelper extends AbstractViewHelper {
 
 	/**
 	 * @var array
