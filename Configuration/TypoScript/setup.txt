@@ -51,9 +51,6 @@ plugin.tx_cwtwitter {
 		partialRootPath = {$plugin.tx_cwtwitter.view.partialRootPath}
 		layoutRootPath = {$plugin.tx_cwtwitter.view.layoutRootPath}
 	}
-	persistence {
-		storagePid = {$plugin.tx_cwtwitter.persistence.storagePid}
-	}
 }
 
 plugin.tx_cwtwitter._CSS_DEFAULT_STYLE (
