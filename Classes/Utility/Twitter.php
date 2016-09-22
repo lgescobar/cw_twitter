@@ -27,6 +27,9 @@ namespace CW\CwTwitter\Utility;
 
 use CW\CwTwitter\Exception\ConfigurationException;
 use CW\CwTwitter\Exception\RequestException;
+use TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException;
+use TYPO3\CMS\Core\Cache\Frontend\AbstractFrontend;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 require_once(__DIR__ . '/../Contrib/OAuth.php');
 
@@ -40,7 +43,7 @@ require_once(__DIR__ . '/../Contrib/OAuth.php');
 class Twitter
 {
     /**
-     * @var t3lib_cache_frontend_AbstractFrontend
+     * @var AbstractFrontend
      */
     protected $cache;
     /**
@@ -63,6 +66,7 @@ class Twitter
      *
      * @param array $settings
      * @return Twitter
+     * @throws ConfigurationException
      */
     public static function getTwitterFromSettings($settings)
     {
@@ -78,8 +82,9 @@ class Twitter
     }
 
     /**
-     * @param array $settings
+     * @param $settings
      * @return array
+     * @throws ConfigurationException
      */
     public static function getTweetsFromSettings($settings)
     {
@@ -107,18 +112,16 @@ class Twitter
     }
 
     /**
-     * Constructor
-     *
-     * @return void
+     * Twitter constructor.
      */
     public function __construct()
     {
 //		t3lib_cache::initializeCachingFramework();
 
-        $cacheManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
+        $cacheManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
         try {
             $this->cache = $cacheManager->getCache('cwtwitter_queries');
-        } catch (t3lib_cache_exception_NoSuchCache $e) {
+        } catch (NoSuchCacheException $e) {
             $this->cache = $cacheManager->create(
                 'cwtwitter_queries',
                 $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cwtwitter_queries']['frontend'],
@@ -158,9 +161,10 @@ class Twitter
      * @param string $user
      * @param int $limit
      * @param boolean $exclude_replies
+     * @param boolean $enhanced_privacy
      * @return array
      */
-    public function getTweetsFromTimeline($user = Null, $limit = Null, $exclude_replies = False, $enhanced_privacy = False)
+    public function getTweetsFromTimeline($user = Null, $limit = Null, $exclude_replies = FALSE, $enhanced_privacy = FALSE)
     {
         $params = array(
             'exclude_replies' => $exclude_replies ? 'true' : 'false',
@@ -186,9 +190,10 @@ class Twitter
      *
      * @param string $query
      * @param int $limit
+     * @param bool $enhanced_privacy
      * @return array
      */
-    public function getTweetsFromSearch($query, $limit = Null, $enhanced_privacy = False)
+    public function getTweetsFromSearch($query, $limit = Null, $enhanced_privacy = FALSE)
     {
         $params = array(
             'q' => $query,
@@ -210,7 +215,7 @@ class Twitter
      * Returns the user object for specified user
      *
      * @param string $user
-     * @return stdClass
+     * @return \stdClass
      */
     public function getUser($user)
     {
@@ -225,6 +230,8 @@ class Twitter
      * @param array $params
      * @param string $method
      * @return array
+     * @throws ConfigurationException
+     * @throws RequestException
      */
     protected function getData($path, $params, $method = 'GET')
     {
@@ -276,7 +283,7 @@ class Twitter
      *
      * @param string $path
      * @param array $params
-     * @return void
+     * @return string
      */
     protected function calculateCacheKey($path, $params)
     {
