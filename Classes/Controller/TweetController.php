@@ -58,6 +58,7 @@ class TweetController extends ActionController
     {
         try {
             $tweets = Twitter::getTweetsFromSettings($this->settings);
+            $this->view->assign('tweets', $tweets);
             if ($this->settings['mode'] == 'timeline') {
                 $this->view->assign('user', Twitter::getUserFromSettings($this->settings));
             }
@@ -67,10 +68,6 @@ class TweetController extends ActionController
             GeneralUtility::sysLog($e->getMessage(), 'cw_twitter', GeneralUtility::SYSLOG_SEVERITY_ERROR);
             $this->view->assign('error', $e);
         }
-
-        $this->view->assignMultiple(array(
-            'tweets' => $tweets,
-        ));
     }
 }
 
