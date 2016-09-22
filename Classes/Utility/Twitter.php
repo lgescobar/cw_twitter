@@ -25,6 +25,9 @@ namespace CW\CwTwitter\Utility;
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
 
+use CW\CwTwitter\Exception\ConfigurationException;
+use CW\CwTwitter\Exception\RequestException;
+
 require_once(__DIR__ . '/../Contrib/OAuth.php');
 
 /**
@@ -64,7 +67,7 @@ class Twitter
     public static function getTwitterFromSettings($settings)
     {
         if (!$settings['oauth']['consumer']['key'] || !$settings['oauth']['consumer']['secret'] || !$settings['oauth']['token']['key'] || !$settings['oauth']['token']['secret']) {
-            throw new Tx_CwTwitter_Exception_ConfigurationException("Missing OAuth keys and/or secrets.", 1362059167);
+            throw new ConfigurationException("Missing OAuth keys and/or secrets.", 1362059167);
         }
 
         $twitter = new Twitter();
@@ -91,7 +94,7 @@ class Twitter
                 return $twitter->getTweetsFromSearch($settings['query'], $limit, $settings['enhanced_privacy']);
                 break;
             default:
-                throw new Tx_CwTwitter_Exception_ConfigurationException("Invalid mode specified.", 1362059199);
+                throw new ConfigurationException("Invalid mode specified.", 1362059199);
                 break;
         }
     }
@@ -226,7 +229,7 @@ class Twitter
     protected function getData($path, $params, $method = 'GET')
     {
         if (!function_exists('curl_init')) {
-            throw new Tx_CwTwitter_Exception_ConfigurationException("PHP Curl functions not available on this server", 1362059213);
+            throw new ConfigurationException("PHP Curl functions not available on this server", 1362059213);
         }
 
         if ($method === 'GET') {
@@ -248,7 +251,7 @@ class Twitter
         $response = curl_exec($hCurl);
 
         if ($response === False) {
-            throw new Tx_CwTwitter_Exception_RequestException(sprintf("Error in request: '%s'", curl_error($hCurl)), 1362059229);
+            throw new RequestException(sprintf("Error in request: '%s'", curl_error($hCurl)), 1362059229);
         }
 
         $response = json_decode($response);
@@ -257,7 +260,7 @@ class Twitter
             foreach ($response->errors as $error) {
                 $msg .= sprintf("\n%d: %s", $error->code, $error->message);
             }
-            throw new Tx_CwTwitter_Exception_RequestException($msg, 1362059237);
+            throw new RequestException($msg, 1362059237);
         }
 
         if ($method == 'GET') {
