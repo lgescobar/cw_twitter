@@ -32,7 +32,9 @@ use CW\CwTwitter\ViewHelpers\Link\Tweet\AbstractViewHelper;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class TweetViewHelper extends AbstractViewHelper  {
-	protected $path = '{user}/status/{id_str}';
+class TweetViewHelper extends AbstractViewHelper
+{
+    protected $path = '{user}/status/{id_str}';
 }
+
 ?>

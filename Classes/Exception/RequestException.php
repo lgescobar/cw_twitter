@@ -1,5 +1,6 @@
 <?php
 namespace CW\CwTwitter\Exception;
+
 /* * *************************************************************
  *  Copyright notice
  *
@@ -31,7 +32,8 @@ namespace CW\CwTwitter\Exception;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class RequestException extends \Exception {
-
+class RequestException extends \Exception
+{
 }
+
 ?>

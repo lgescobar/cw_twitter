@@ -31,7 +31,9 @@ namespace CW\CwTwitter\ViewHelpers\Link\Tweet;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class ReplyViewHelper extends AbstractViewHelper  {
-	protected $path = 'intent/tweet?in_reply_to={id}';
+class ReplyViewHelper extends AbstractViewHelper
+{
+    protected $path = 'intent/tweet?in_reply_to={id}';
 }
+
 ?>

@@ -33,46 +33,48 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-abstract class AbstractViewHelper extends AbstractTagBasedViewHelper {
-	/**
-	 * @var string
-	 */
-	protected $tagName = 'a';
+abstract class AbstractViewHelper extends AbstractTagBasedViewHelper
+{
+    /**
+     * @var string
+     */
+    protected $tagName = 'a';
+    /**
+     * @var string
+     */
+    protected $baseUrl = 'https://twitter.com/';
+    /**
+     * @var string
+     */
+    protected $path = '';
 
-	/**
-	 * @var string
-	 */
-	protected $baseUrl = 'https://twitter.com/';
+    /**
+     * Initialize arguments
+     *
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        $this->registerUniversalTagAttributes();
+        $this->registerTagAttribute('name', 'string', 'Specifies the name of an anchor');
+        $this->registerTagAttribute('rel', 'string', 'Specifies the relationship between the current document and the linked document');
+        $this->registerTagAttribute('rev', 'string', 'Specifies the relationship between the linked document and the current document');
+        $this->registerTagAttribute('target', 'string', 'Specifies where to open the linked document');
+    }
 
-	/**
-	 * @var string
-	 */
-	protected $path = '';
+    /**
+     * Render a specific actionlink (favorite, reply, retweet, show) to a tweet
+     *
+     * @param stdClass $tweet
+     */
+    public function render($tweet)
+    {
+        $this->tag->setContent($this->renderChildren());
+        $path = str_replace(array('{id}', '{id_str}', '{user}'), array($tweet->id, $tweet->id_str, $tweet->user->screen_name), $this->path);
+        $this->tag->addAttribute('href', $this->baseUrl . $path);
 
-	/**
-	 * Initialize arguments
-	 *
-	 * @return void
-	 */
-	public function initializeArguments() {
-		$this->registerUniversalTagAttributes();
-		$this->registerTagAttribute('name', 'string', 'Specifies the name of an anchor');
-		$this->registerTagAttribute('rel', 'string', 'Specifies the relationship between the current document and the linked document');
-		$this->registerTagAttribute('rev', 'string', 'Specifies the relationship between the linked document and the current document');
-		$this->registerTagAttribute('target', 'string', 'Specifies where to open the linked document');
-	}
-
-	/**
-	 * Render a specific actionlink (favorite, reply, retweet, show) to a tweet
-	 *
-	 * @param stdClass $tweet
-	 */
-	public function render($tweet) {
-		$this->tag->setContent($this->renderChildren());
-		$path = str_replace(array('{id}', '{id_str}', '{user}'), array($tweet->id, $tweet->id_str, $tweet->user->screen_name), $this->path);
-		$this->tag->addAttribute('href', $this->baseUrl.$path);
-
-		return $this->tag->render();
-	}
+        return $this->tag->render();
+    }
 }
+
 ?>

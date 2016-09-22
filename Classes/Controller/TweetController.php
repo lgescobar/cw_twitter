@@ -1,5 +1,6 @@
 <?php
 namespace CW\CwTwitter\Controller;
+
 /* * *************************************************************
  *  Copyright notice
  *
@@ -37,39 +38,40 @@ use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class TweetController extends ActionController  {
+class TweetController extends ActionController
+{
+    /**
+     * @param ViewInterface $view
+     * @return void
+     */
+    protected function initializeView($view)
+    {
+        $view->assign('contentObjectData', $this->configurationManager->getContentObject()->data);
+    }
 
-	/**
-	 * @param ViewInterface $view
-	 * @return void
-	 */
-	protected function initializeView($view) {
-		$view->assign('contentObjectData', $this->configurationManager->getContentObject()->data);
-	}
+    /**
+     * List tweets
+     *
+     * @return void
+     */
+    public function listAction()
+    {
+        try {
+            $tweets = Twitter::getTweetsFromSettings($this->settings);
+            if ($this->settings['mode'] == 'timeline') {
+                $this->view->assign('user', Twitter::getUserFromSettings($this->settings));
+            }
+        } catch (ConfigurationException $e) {
+            return $e->getMessage();
+        } catch (RequestException $e) {
+            GeneralUtility::sysLog($e->getMessage(), 'cw_twitter', GeneralUtility::SYSLOG_SEVERITY_ERROR);
+            $this->view->assign('error', $e);
+        }
 
-	/**
-	 * List tweets
-	 *
-	 * @return void
-	 */
-	public function listAction() {
-		try {
-			$tweets = Twitter::getTweetsFromSettings($this->settings);
-			if($this->settings['mode'] == 'timeline') {
-				$this->view->assign('user', Twitter::getUserFromSettings($this->settings));
-			}
-		}
-		catch(ConfigurationException $e) {
-			return $e->getMessage();
-		}
-		catch(RequestException $e) {
-			GeneralUtility::sysLog($e->getMessage(), 'cw_twitter', GeneralUtility::SYSLOG_SEVERITY_ERROR);
-			$this->view->assign('error', $e);
-		}
-
-		$this->view->assignMultiple(array(
-			'tweets' => $tweets,
-		));
-	}
+        $this->view->assignMultiple(array(
+            'tweets' => $tweets,
+        ));
+    }
 }
+
 ?>

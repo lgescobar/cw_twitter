@@ -1,12 +1,12 @@
 <?php
 if (!defined('TYPO3_MODE')) {
-	die ('Access denied.');
+    die ('Access denied.');
 }
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
     'CW.' . $_EXTKEY,
-	'Pi1',
-	'Twitter feed'
+    'Pi1',
+    'Twitter feed'
 );
 
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['cwtwitter_pi1'] = 'select_key,recursive,pages';
