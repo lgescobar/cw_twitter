@@ -1,10 +1,10 @@
 <?php
-namespace CW\CwTwitter\Exception;
+defined('TYPO3_MODE') or die('Access denied.');
 
 /* * *************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Arjan de Pooter <arjan@cmsworks.nl>, CMS Works BV
+ *  (c) 2017 KO-Web | Kai Ole Hartwig <mail@ko-web.net>
  *
  *  All rights reserved
  *
@@ -25,12 +25,11 @@ namespace CW\CwTwitter\Exception;
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
 
-/**
- *
- *
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
- */
-class ConfigurationException extends \Exception
-{
-}
+call_user_func(function ($extKey) {
+    // Add static template
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+        $extKey,
+        'Configuration/TypoScript',
+        'Twitter feed'
+    );
+}, 'cw_twitter');

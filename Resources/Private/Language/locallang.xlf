@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2017-08-08T11:14:58+02:00"
+		  product-name="cw_twitter">
+		<header/>
+		<body>
+
+			<trans-unit id="flexform.sheets.sDEF">
+				<source>Default</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.mode">
+				<source>Mode</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.mode.timeline">
+				<source>Timeline</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.mode.search">
+				<source>Search</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.query">
+				<source>Search query</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.username">
+				<source>Username</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.limit">
+				<source>Tweet limit</source>
+			</trans-unit>
+			<trans-unit id="flexform.settings.exclude_replies">
+				<source>Exclude replies</source>
+			</trans-unit>
+			<trans-unit id="tweetlist.empty">
+				<source>No (recent) tweets found</source>
+			</trans-unit>
+			<trans-unit id="tweetlist.retweeted_by">
+				<source>Retweeted by</source>
+			</trans-unit>
+			<trans-unit id="error.request">
+				<source>Error occured while retrieving tweets</source>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>
+

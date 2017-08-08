@@ -1,56 +1,73 @@
 plugin.tx_cwtwitter {
-	settings {
-		oauth {
-			consumer {
-				key = {$plugin.tx_cwtwitter.settings.oauth.consumer.key}
-				secret = {$plugin.tx_cwtwitter.settings.oauth.consumer.secret}
-			}
-			token {
-				key = {$plugin.tx_cwtwitter.settings.oauth.token.key}
-				secret = {$plugin.tx_cwtwitter.settings.oauth.token.secret}
-			}
-		}
-		mode = {$plugin.tx_cwtwitter.settings.mode}
-		username = {$plugin.tx_cwtwitter.settings.username}
-		query = {$plugin.tx_cwtwitter.settings.query}
-		limit = {$plugin.tx_cwtwitter.settings.limit}
-		exclude_replies = {$plugin.tx_cwtwitter.settings.exclude_replies}
-		enhanced_privacy = {$plugin.tx_cwtwitter.settings.enhanced_privacy}
-	}
-	parsers {
-		urls = TEXT
-		urls {
-			field = display_url
-			typolink {
-				parameter = {field:url} _blank - "{field:display_url}"
-				parameter.insertData = 1
-			}
-		}
-		mentions = TEXT
-		mentions {
-			value = @{field:screen_name}
-			insertData = 1
-			typolink {
-				parameter = //twitter.com/{field:screen_name} _blank - "{field:name}"
-				parameter.insertData = 1
-			}
-		}
-		media < plugin.tx_cwtwitter.parsers.urls
-		hashtags = TEXT
-		hashtags {
-			value = #{field:text}
-			insertData = 1
-			typolink {
-				parameter = //twitter.com/search?q=%23{field:text}&src=hash _blank
-				parameter.insertData = 1
-			}
-		}
-	}
-	view {
-		templateRootPath = {$plugin.tx_cwtwitter.view.templateRootPath}
-		partialRootPath = {$plugin.tx_cwtwitter.view.partialRootPath}
-		layoutRootPath = {$plugin.tx_cwtwitter.view.layoutRootPath}
-	}
+    view {
+        templateRootPaths {
+            0 = EXT:cw_twitter/Resources/Private/Templates/
+            1 = {$plugin.tx_cwtwitter.view.templateRootPath}
+        }
+
+        partialRootPaths {
+            0 = EXT:cw_twitter/Resources/Private/Partials/
+            1 = {$plugin.tx_cwtwitter.view.partialRootPath}
+        }
+
+        layoutRootPaths {
+            0 = EXT:cw_twitter/Resources/Private/Layouts/
+            1 = {$plugin.tx_cwtwitter.view.layoutRootPath}
+        }
+    }
+
+    settings {
+        oauth {
+            consumer {
+                key = {$plugin.tx_cwtwitter.settings.oauth.consumer.key}
+                secret = {$plugin.tx_cwtwitter.settings.oauth.consumer.secret}
+            }
+
+            token {
+                key = {$plugin.tx_cwtwitter.settings.oauth.token.key}
+                secret = {$plugin.tx_cwtwitter.settings.oauth.token.secret}
+            }
+        }
+
+        mode = {$plugin.tx_cwtwitter.settings.mode}
+        username = {$plugin.tx_cwtwitter.settings.username}
+        query = {$plugin.tx_cwtwitter.settings.query}
+        limit = {$plugin.tx_cwtwitter.settings.limit}
+        exclude_replies = {$plugin.tx_cwtwitter.settings.exclude_replies}
+        enhanced_privacy = {$plugin.tx_cwtwitter.settings.enhanced_privacy}
+    }
+
+    parsers {
+        urls = TEXT
+        urls {
+            field = display_url
+            typolink {
+                parameter = {field:url} _blank - "{field:display_url}"
+                parameter.insertData = 1
+            }
+        }
+
+        mentions = TEXT
+        mentions {
+            value = @{field:screen_name}
+            insertData = 1
+            typolink {
+                parameter = //twitter.com/{field:screen_name} _blank - "{field:name}"
+                parameter.insertData = 1
+            }
+        }
+
+        media < plugin.tx_cwtwitter.parsers.urls
+        hashtags = TEXT
+        hashtags {
+            value = #{field:text}
+            insertData = 1
+            typolink {
+                parameter = //twitter.com/search?q=%23{field:text}&src=hash _blank
+                parameter.insertData = 1
+            }
+        }
+    }
 }
 
 plugin.tx_cwtwitter._CSS_DEFAULT_STYLE (

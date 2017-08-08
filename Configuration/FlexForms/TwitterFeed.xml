@@ -6,23 +6,24 @@
 		<sDEF>
 			<ROOT>
 				<TCEforms>
-					<sheetTitle>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.sheets.sDEF</sheetTitle>
+					<sheetTitle>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xlf:flexform.sheets.sDEF</sheetTitle>
 				</TCEforms>
 				<type>array</type>
 				<el>
 					<settings.mode>
 						<TCEforms>
-							<label>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.settings.mode</label>
+							<label>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xlf:flexform.settings.mode</label>
 							<onChange>reload</onChange>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items type="array">
 									<numIndex index="0" type="array">
-										<numIndex index="0">LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.settings.mode.timeline</numIndex>
+										<numIndex index="0">LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xlf:flexform.settings.mode.timeline</numIndex>
 										<numIndex index="1">timeline</numIndex>
 									</numIndex>
 									<numIndex index="1" type="array">
-										<numIndex index="0">LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.settings.mode.search</numIndex>
+										<numIndex index="0">LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xlf:flexform.settings.mode.search</numIndex>
 										<numIndex index="1">search</numIndex>
 									</numIndex>
 								</items>
@@ -30,9 +31,10 @@
 							</config>
 						</TCEforms>
 					</settings.mode>
+
 					<settings.query>
 						<TCEforms>
-							<label>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.settings.query</label>
+							<label>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xlf:flexform.settings.query</label>
 							<displayCond>FIELD:settings.mode:=:search</displayCond>
 							<config>
 								<type>text</type>
@@ -40,9 +42,10 @@
 							</config>
 						</TCEforms>
 					</settings.query>
+
 					<settings.username>
 						<TCEforms>
-							<label>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.settings.username</label>
+							<label>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xlf:flexform.settings.username</label>
 							<displayCond>FIELD:settings.mode:=:timeline</displayCond>
 							<config>
 								<type>input</type>
@@ -50,9 +53,10 @@
 							</config>
 						</TCEforms>
 					</settings.username>
+
 					<settings.limit>
 						<TCEforms>
-							<label>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.settings.limit</label>
+							<label>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xlf:flexform.settings.limit</label>
 							<config>
 								<type>input</type>
 								<eval>int</eval>
@@ -60,9 +64,10 @@
 							</config>
 						</TCEforms>
 					</settings.limit>
+
 					<settings.exclude_replies>
 						<TCEforms>
-							<label>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xml:flexform.settings.exclude_replies</label>
+							<label>LLL:EXT:cw_twitter/Resources/Private/Language/locallang.xlf:flexform.settings.exclude_replies</label>
 							<displayCond>FIELD:settings.mode:=:timeline</displayCond>
 							<config>
 								<type>check</type>
