@@ -40,6 +40,20 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 class TweetViewHelper extends AbstractViewHelper
 {
     /**
+     * This ViewHelper needs to render unescaped children to get the entities to be parsed.
+     *
+     * @var bool
+     */
+    protected $escapeChildren = false;
+
+    /**
+     * As this ViewHelper renders HTML, the output must not be escaped.
+     *
+     * @var bool
+     */
+    protected $escapeOutput = false;
+
+    /**
      * @var array
      */
     protected $typoScriptSetup;
@@ -98,8 +112,11 @@ class TweetViewHelper extends AbstractViewHelper
 
             $replacements = [];
             foreach ($entityTypes as $type => $parsePath) {
-                if (isset($tweet['entities']['type']) && is_array($tweet['entities']['type'])) {
-                    foreach ($tweet['entities']['type'] as $entity) {
+                if (isset($tweet['entities'][$type])
+                    && is_array($tweet['entities'][$type])
+                    && !empty($tweet['entities'][$type])
+                ) {
+                    foreach ($tweet['entities'][$type] as $entity) {
                         list($start, $stop) = $entity['indices'];
                         $replacements[$start] = [
                             'text' => $this->getDataFromParser($parsePath, $entity),
@@ -111,7 +128,8 @@ class TweetViewHelper extends AbstractViewHelper
 
             krsort($replacements);
             foreach ($replacements as $start => $replacement) {
-                $tweettext = mb_substr($tweettext, 0, $start, 'UTF-8') . $replacement['text']
+                $tweettext = mb_substr($tweettext, 0, $start, 'UTF-8')
+                    . $replacement['text']
                     . mb_substr($tweettext, $start + $replacement['width'], mb_strlen($tweettext, 'UTF-8'), 'UTF-8');
             }
 

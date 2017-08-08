@@ -58,6 +58,7 @@ plugin.tx_cwtwitter {
         }
 
         media < plugin.tx_cwtwitter.parsers.urls
+
         hashtags = TEXT
         hashtags {
             value = #{field:text}
