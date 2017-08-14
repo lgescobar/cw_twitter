@@ -1,10 +1,10 @@
 <?php
-namespace CW\CwTwitter\Exception;
+defined('TYPO3_MODE') or die('Access denied.');
 
 /* * *************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Arjan de Pooter <arjan@cmsworks.nl>, CMS Works BV
+ *  (c) 2017 KO-Web | Kai Ole Hartwig <mail@ko-web.net>
  *
  *  All rights reserved
  *
@@ -25,12 +25,24 @@ namespace CW\CwTwitter\Exception;
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
 
-/**
- *
- *
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
- */
-class ConfigurationException extends \Exception
-{
-}
+call_user_func(function ($extKey) {
+    $extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($extKey);
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+        'CW.' . $extKey,
+        'Pi1',
+        'Twitter feed'
+    );
+
+    // Add plugin FlexForm
+    $pluginSignature = strtolower($extensionName) . '_pi1';
+
+    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] =
+        'select_key,recursive,pages';
+    $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
+
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+        $pluginSignature,
+        'FILE:EXT:' . $extKey . '/Configuration/FlexForms/TwitterFeed.xml'
+    );
+}, 'cw_twitter');

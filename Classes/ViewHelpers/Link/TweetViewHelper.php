@@ -1,5 +1,6 @@
 <?php
 namespace CW\CwTwitter\ViewHelpers\Link;
+
 /* * *************************************************************
  *  Copyright notice
  *
@@ -23,12 +24,12 @@ namespace CW\CwTwitter\ViewHelpers\Link;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
+
 use CW\CwTwitter\ViewHelpers\Link\Tweet\AbstractViewHelper;
 
 /**
  *
  *
- * @package cw_twitter
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
@@ -36,5 +37,3 @@ class TweetViewHelper extends AbstractViewHelper
 {
     protected $path = '{user}/status/{id_str}';
 }
-
-?>

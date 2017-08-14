@@ -24,6 +24,7 @@ namespace CW\CwTwitter\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
+
 use CW\CwTwitter\Exception\ConfigurationException;
 use CW\CwTwitter\Exception\RequestException;
 use CW\CwTwitter\Utility\Twitter;
@@ -34,25 +35,22 @@ use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 /**
  *
  *
- * @package cw_twitter
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
 class TweetController extends ActionController
 {
     /**
-     * @param ViewInterface $view
+     * @param \TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view
      * @return void
      */
-    protected function initializeView($view)
+    protected function initializeView(ViewInterface $view)
     {
         $view->assign('contentObjectData', $this->configurationManager->getContentObject()->data);
     }
 
     /**
      * List tweets
-     *
-     * @return void
      */
     public function listAction()
     {
@@ -70,5 +68,3 @@ class TweetController extends ActionController
         }
     }
 }
-
-?>

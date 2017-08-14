@@ -24,12 +24,12 @@ namespace CW\CwTwitter\ViewHelpers\Link\Tweet;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
+
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
  *
  *
- * @package cw_twitter
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
@@ -65,16 +65,26 @@ abstract class AbstractViewHelper extends AbstractTagBasedViewHelper
     /**
      * Render a specific actionlink (favorite, reply, retweet, show) to a tweet
      *
-     * @param stdClass $tweet
+     * @param array $tweet
+     * @return string
      */
-    public function render($tweet)
+    public function render(array $tweet)
     {
         $this->tag->setContent($this->renderChildren());
-        $path = str_replace(array('{id}', '{id_str}', '{user}'), array($tweet->id, $tweet->id_str, $tweet->user->screen_name), $this->path);
+        $path = str_replace(
+            [
+                '{id}',
+                '{id_str}',
+                '{user}'],
+            [
+                $tweet['id'],
+                $tweet['id_str'],
+                $tweet['user']['screen_name']
+            ],
+            $this->path
+        );
         $this->tag->addAttribute('href', $this->baseUrl . $path);
 
         return $this->tag->render();
     }
 }
-
-?>

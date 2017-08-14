@@ -1,38 +1,41 @@
 plugin.tx_cwtwitter {
-	settings {
-		oauth {
-			consumer {
-				# cat=plugin.tx_cwtwitter/oauth; type=string; label=OAuth Consumer Key
-				key =
-				# cat=plugin.tx_cwtwitter/oauth; type=string; label=OAuth Consumer Secret
-				secret =
-			}
-			token {
-				# cat=plugin.tx_cwtwitter/oauth; type=string; label=OAuth Token Key
-				key =
-				# cat=plugin.tx_cwtwitter/oauth; type=string; label=OAuth Token Secret
-				secret =
-			}
-		}
-		# cat=plugin.tx_cwtwitter; type=string; label=Mode (timeline or search)
-		mode = timeline
-		# cat=plugin.tx_cwtwitter; type=string; label=Username (for timeline mode)
-		username =
-		# cat=plugin.tx_cwtwitter; type=string; label=Query (for search mode)
-		query =
-		# cat=plugin.tx_cwtwitter; type=int; label=Number of tweets to display
-		limit = 10
-		# cat=plugin.tx_cwtwitter; type=boolean; label=Exclude replies from timeline
-		exclude_replies = 0
-		# cat=plugin.tx_cwtwitter; type=boolean; label=Prevent client-side requests to Twitter
-		enhanced_privacy = 0
-	}
-	view {
-		# cat=plugin.tx_cwtwitter/file; type=string; label=Path to template root (FE)
-		templateRootPath = EXT:cw_twitter/Resources/Private/Templates/
-		# cat=plugin.tx_cwtwitter/file; type=string; label=Path to template partials (FE)
-		partialRootPath = EXT:cw_twitter/Resources/Private/Partials/
-		# cat=plugin.tx_cwtwitter/file; type=string; label=Path to template layouts (FE)
-		layoutRootPath = EXT:cw_twitter/Resources/Private/Layouts/
-	}
+    view {
+        # cat=plugin.tx_cwtwitter/file; type=string; label=Path to template root (FE)
+        templateRootPath = EXT:cw_twitter/Resources/Private/Templates/
+        # cat=plugin.tx_cwtwitter/file; type=string; label=Path to template partials (FE)
+        partialRootPath = EXT:cw_twitter/Resources/Private/Partials/
+        # cat=plugin.tx_cwtwitter/file; type=string; label=Path to template layouts (FE)
+        layoutRootPath = EXT:cw_twitter/Resources/Private/Layouts/
+    }
+
+    settings {
+        oauth {
+            consumer {
+                # cat=plugin.tx_cwtwitter/oauth; type=string; label=OAuth Consumer Key
+                key =
+                # cat=plugin.tx_cwtwitter/oauth; type=string; label=OAuth Consumer Secret
+                secret =
+            }
+
+            token {
+                # cat=plugin.tx_cwtwitter/oauth; type=string; label=OAuth Token Key
+                key =
+                # cat=plugin.tx_cwtwitter/oauth; type=string; label=OAuth Token Secret
+                secret =
+            }
+        }
+
+        # cat=plugin.tx_cwtwitter; type=string; label=Mode (timeline or search)
+        mode = timeline
+        # cat=plugin.tx_cwtwitter; type=string; label=Username (for timeline mode)
+        username =
+        # cat=plugin.tx_cwtwitter; type=string; label=Query (for search mode)
+        query =
+        # cat=plugin.tx_cwtwitter; type=int; label=Number of tweets to display
+        limit = 10
+        # cat=plugin.tx_cwtwitter; type=boolean; label=Exclude replies from timeline
+        exclude_replies = 0
+        # cat=plugin.tx_cwtwitter; type=boolean; label=Prevent client-side requests to Twitter
+        enhanced_privacy = 0
+    }
 }
