@@ -9,7 +9,7 @@
 					<f:alias map="{tweet: '{f:if(condition:orig_tweet.retweeted_status,then:orig_tweet.retweeted_status,else:orig_tweet)}'}">
 						<div class="cwtw-TweetWrap">
 							<div class="cwtw-TweetAvatar">
-								<img src="{tweet.user.profile_image_url}" alt="{tweet.user.name}" height="48" width="48" class="cwtw-TweetAvatar-image"/>
+								<img src="{tweet.user.profile_image_url_https}" alt="{tweet.user.name}" height="48" width="48" class="cwtw-TweetAvatar-image"/>
 							</div>
 							<div class="cwtw-Tweet">
 								<p><tw:format.tweet>{tweet}</tw:format.tweet></p>
