@@ -29,12 +29,12 @@ $EM_CONF[$_EXTKEY] = [
     'description' => 'Show tweets from user or search query on frontend.',
     'category' => 'plugin',
 
-    'author' => 'Arjan de Pooter',
-    'author_email' => 'mail@arjandepooter.nl',
+    'author' => 'Arjan de Pooter, Luis A. García',
+    'author_email' => 'mail@arjandepooter.nl, louisantoniogarcia@gmail.com',
     'author_company' => '',
 
     'state' => 'beta',
-    'version' => '2.0.0',
+    'version' => '2.1.0',
 
     'uploadfolder' => false,
     'clearCacheOnLoad' => false,
