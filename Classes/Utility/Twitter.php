@@ -310,7 +310,7 @@ class Twitter
      */
     protected function saveTweetPicturesLocally(array &$tweets)
     {
-        foreach ($tweets as $tweet) {
+        foreach ($tweets as &$tweet) {
             if (!empty($tweet['user']['profile_image_url'])) {
                 $tweet['user']['profile_image_url'] = $this->saveUserPic($tweet['user']['profile_image_url']);
             }
