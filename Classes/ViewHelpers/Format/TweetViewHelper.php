@@ -66,8 +66,10 @@ class Tx_CwTwitter_ViewHelpers_Format_TweetViewHelper extends \TYPO3\CMS\Fluid\C
 		if(is_null($tweet)) {
 			$tweet = $this->renderChildren();
 		}
-
-		if(isset($tweet->text)) {
+		
+		if(isset($tweet->full_text)) {
+			$tweettext = $tweet->full_text;
+		} else if(isset($tweet->text)) {
 			$tweettext = $tweet->text;
 		}
 		else {
