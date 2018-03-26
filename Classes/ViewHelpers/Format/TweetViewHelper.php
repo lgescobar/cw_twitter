@@ -61,18 +61,18 @@ class Tx_CwTwitter_ViewHelpers_Format_TweetViewHelper extends \TYPO3\CMS\Fluid\C
 	 * @param string $mentionParser TypoScript path for parsing urls
 	 * @param string $mediaParser TypoScript path for parsing urls
 	 * @return string
+	 * @throws \Tx_Fluid_Core_ViewHelper_Exception
 	 */
 	public function render($tweet = Null, $urlParser = 'plugin.tx_cwtwitter.parsers.urls', $hashtagParser = 'plugin.tx_cwtwitter.parsers.hashtags', $mentionParser = 'plugin.tx_cwtwitter.parsers.mentions', $mediaParser = 'plugin.tx_cwtwitter.parsers.media') {
 		if(is_null($tweet)) {
 			$tweet = $this->renderChildren();
 		}
-		
-		if(isset($tweet->full_text)) {
+
+		if (isset($tweet->full_text)) {
 			$tweettext = $tweet->full_text;
-		} else if(isset($tweet->text)) {
+		} elseif (isset($tweet->text)) {
 			$tweettext = $tweet->text;
-		}
-		else {
+		} else {
 			throw new Tx_Fluid_Core_ViewHelper_Exception("Tweet object doesn't contain text property.", 1362042983);
 		}
 

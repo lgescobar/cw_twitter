@@ -85,7 +85,7 @@ class Tx_CwTwitter_Utility_Twitter {
 		$limit = intval($settings['limit']);
 		switch ($settings['mode']) {
 			case 'timeline':
-				return $twitter->getTweetsFromTimeline($settings['username'], $limit, $settings['exclude_replies'], $settings['enhanced_privacy']);
+				return $twitter->getTweetsFromTimeline($settings['username'], $limit, $settings['exclude_replies'], $settings['enhanced_privacy'], $settings['extended_tweet_mode']);
 				break;
 			case 'search':
 				return $twitter->getTweetsFromSearch($settings['query'], $limit, $settings['enhanced_privacy']);
@@ -146,20 +146,26 @@ class Tx_CwTwitter_Utility_Twitter {
 		$this->token = new OAuthToken($key, $secret);
 	}
 
-	/**
-	 * Get tweets from timeline from a specific user
-	 *
-	 * @param string $user
-	 * @param int $limit
-	 * @param boolean $exclude_replies
-	 * @return array
-	 */
-	public function getTweetsFromTimeline($user = Null, $limit = Null, $exclude_replies = False, $enhanced_privacy = False) {
+    /**
+     * Get tweets from timeline from a specific user
+     *
+     * @param string $user
+     * @param int $limit
+     * @param boolean $exclude_replies
+     * @param bool $enhanced_privacy
+     * @param bool $extended_tweet_mode
+     * @return array
+     * @throws \Tx_CwTwitter_Exception_ConfigurationException
+     * @throws \Tx_CwTwitter_Exception_RequestException
+     */
+	public function getTweetsFromTimeline($user = Null, $limit = Null, $exclude_replies = False, $enhanced_privacy = False, $extended_tweet_mode = false) {
 		$params = array(
 			'exclude_replies' => $exclude_replies ? 'true':'false',
 		);
 
-        $params['tweet_mode'] = 'extended';
+		if ($extended_tweet_mode) {
+			$params['tweet_mode'] = 'extended';
+		}
 
 		if($user) {
 			$params['screen_name'] = $user;
