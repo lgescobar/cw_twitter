@@ -159,6 +159,8 @@ class Tx_CwTwitter_Utility_Twitter {
 			'exclude_replies' => $exclude_replies ? 'true':'false',
 		);
 
+        $params['tweet_mode'] = 'extended';
+
 		if($user) {
 			$params['screen_name'] = $user;
 		}
