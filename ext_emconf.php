@@ -27,7 +27,7 @@ $EM_CONF[$_EXTKEY] = array (
 	'modify_tables' => '',
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
-	'version' => '1.2.0',
+	'version' => '1.3.0',
 	'autoload' =>
 		array(
 			'classmap' => array('Classes')
