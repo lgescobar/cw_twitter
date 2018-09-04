@@ -36,6 +36,7 @@ plugin.tx_cwtwitter {
         exclude_replies = {$plugin.tx_cwtwitter.settings.exclude_replies}
         enhanced_privacy = {$plugin.tx_cwtwitter.settings.enhanced_privacy}
         extended_tweet_mode = {$plugin.tx_cwtwitter.settings.extended_tweet_mode}
+        include_rts = {$plugin.tx_cwtwitter.settings.include_rts}
     }
 
     parsers {

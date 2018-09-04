@@ -106,7 +106,8 @@ class Twitter
                     $limit,
                     $settings['exclude_replies'],
                     $settings['enhanced_privacy'],
-                    $settings['extended_tweet_mode']
+                    $settings['extended_tweet_mode'],
+                    $settings['include_rts']
                 );
                 break;
             case 'search':
@@ -176,6 +177,7 @@ class Twitter
      * @param bool $exclude_replies
      * @param bool $enhanced_privacy
      * @param bool $extended_tweet_mode
+     * @param bool $include_rts
      * @return array
      * @throws ConfigurationException
      * @throws RequestException
@@ -186,7 +188,8 @@ class Twitter
         $limit = null,
         $exclude_replies = false,
         $enhanced_privacy = false,
-        $extended_tweet_mode = true
+        $extended_tweet_mode = true,
+        $include_rts = true
     ) {
         $params = [
             'exclude_replies' => $exclude_replies ? 'true' : 'false',
@@ -203,6 +206,8 @@ class Twitter
         if ($limit) {
             $params['count'] = $limit;
         }
+
+        $params['include_rts'] = $include_rts;
 
         $tweets = $this->getData('statuses/user_timeline', $params);
         if ($enhanced_privacy) {
