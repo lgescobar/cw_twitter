@@ -39,7 +39,7 @@ plugin.tx_cwtwitter {
         enhanced_privacy = 0
         # cat=plugin.tx_cwtwitter; type=boolean; label=Enable extended tweet mode (up to 280 chars)
         extended_tweet_mode = 1
-        # cat=plugin.tx_cwtwitter; type=boolean; label=Include retweets
+        # cat=plugin.tx_cwtwitter; type=boolean; label=Include retweets in timeline
         include_rts = 1
     }
 }

@@ -28,7 +28,10 @@ namespace CW\CwTwitter\Controller;
 use CW\CwTwitter\Exception\ConfigurationException;
 use CW\CwTwitter\Exception\RequestException;
 use CW\CwTwitter\Utility\Twitter;
+use TYPO3\CMS\Core\TypoScript\TypoScriptService;
+use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 
@@ -41,6 +44,19 @@ use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 class TweetController extends ActionController
 {
     /**
+     * @var \TYPO3\CMS\Core\TypoScript\TypoScriptService
+     */
+    protected $typoScriptService;
+
+    /**
+     * @param \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService
+     */
+    public function injectTypoScriptService(TypoScriptService $typoScriptService)
+    {
+        $this->typoScriptService = $typoScriptService;
+    }
+
+    /**
      * @param \TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view
      * @return void
      */
@@ -50,7 +66,27 @@ class TweetController extends ActionController
     }
 
     /**
+     * Override defined settings before calling action methods.
+     *
+     * @return void
+     */
+    public function initializeAction()
+    {
+        if (!empty($this->settings['overrideFlexformSettings'])) {
+            $typoScriptSettings = $this->getTypoScriptSettings();
+            $keysToOverride = GeneralUtility::trimExplode(',', $this->settings['overrideFlexformSettings'], true);
+
+            foreach ($keysToOverride as $keyToOverride) {
+                if (isset($typoScriptSettings[$keyToOverride])) {
+                    $this->settings[$keyToOverride] = $typoScriptSettings[$keyToOverride];
+                }
+            }
+        }
+    }
+
+    /**
      * List tweets
+     *
      * @throws \OAuthException
      * @throws \TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException
      */
@@ -68,5 +104,43 @@ class TweetController extends ActionController
             GeneralUtility::sysLog($e->getMessage(), 'cw_twitter', GeneralUtility::SYSLOG_SEVERITY_ERROR);
             $this->view->assign('error', $e);
         }
+    }
+
+    /**
+     * Helper method to get the plugin settings not overridden by FlexForm settings.
+     *
+     * @see \TYPO3\CMS\Extbase\Configuration\FrontendConfigurationManager::getPluginConfiguration()
+     *
+     * @return array
+     */
+    protected function getTypoScriptSettings()
+    {
+        $extensionName = $this->extensionName;
+        $pluginName = $this->request->getPluginName();
+        $pluginSettings = [];
+
+        $setup = $this->configurationManager->getConfiguration(
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT
+        );
+
+        if (is_array($setup['plugin.']['tx_' . strtolower($extensionName) . '.']['settings.'])) {
+            $pluginSettings = $this->typoScriptService->convertTypoScriptArrayToPlainArray(
+                $setup['plugin.']['tx_' . strtolower($extensionName) . '.']['settings.']
+            );
+        }
+
+        if ($pluginName !== null) {
+            $pluginSignature = strtolower($extensionName . '_' . $pluginName);
+            if (is_array($setup['plugin.']['tx_' . $pluginSignature . '.']['settings.'])) {
+                ArrayUtility::mergeRecursiveWithOverrule(
+                    $pluginSettings,
+                    $this->typoScriptService->convertTypoScriptArrayToPlainArray(
+                        $setup['plugin.']['tx_' . $pluginSignature . '.']['settings.']
+                    )
+                );
+            }
+        }
+
+        return $pluginSettings;
     }
 }

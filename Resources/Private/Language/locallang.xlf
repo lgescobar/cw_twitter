@@ -29,6 +29,9 @@
 			<trans-unit id="flexform.settings.exclude_replies">
 				<source>Exclude replies</source>
 			</trans-unit>
+			<trans-unit id="flexform.settings.include_rts">
+				<source>Include retweets</source>
+			</trans-unit>
 			<trans-unit id="tweetlist.empty">
 				<source>No (recent) tweets found</source>
 			</trans-unit>
