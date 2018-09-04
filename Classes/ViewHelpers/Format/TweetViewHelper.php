@@ -96,7 +96,9 @@ class TweetViewHelper extends AbstractViewHelper
             $tweet = $this->renderChildren();
         }
 
-        if (isset($tweet['text'])) {
+        if (isset($tweet['full_text'])) {
+            $tweettext = $tweet['full_text'];
+        } elseif (isset($tweet['text'])) {
             $tweettext = $tweet['text'];
         } else {
             throw new Exception("Tweet object doesn't contain text property.", 1362042983);

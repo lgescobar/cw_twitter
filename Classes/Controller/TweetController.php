@@ -51,6 +51,8 @@ class TweetController extends ActionController
 
     /**
      * List tweets
+     * @throws \OAuthException
+     * @throws \TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException
      */
     public function listAction()
     {

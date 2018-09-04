@@ -37,5 +37,7 @@ plugin.tx_cwtwitter {
         exclude_replies = 0
         # cat=plugin.tx_cwtwitter; type=boolean; label=Prevent client-side requests to Twitter
         enhanced_privacy = 0
+        # cat=plugin.tx_cwtwitter; type=boolean; label=Enable extended tweet mode (up to 280 chars)
+        extended_tweet_mode = 1
     }
 }

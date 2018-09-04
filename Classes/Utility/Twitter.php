@@ -69,6 +69,7 @@ class Twitter
      * @param array $settings
      * @return Twitter
      * @throws ConfigurationException
+     * @throws \TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException
      */
     public static function getTwitterFromSettings($settings)
     {
@@ -89,6 +90,9 @@ class Twitter
      * @param $settings
      * @return array
      * @throws ConfigurationException
+     * @throws RequestException
+     * @throws \OAuthException
+     * @throws \TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException
      */
     public static function getTweetsFromSettings($settings)
     {
@@ -101,7 +105,8 @@ class Twitter
                     $settings['username'],
                     $limit,
                     $settings['exclude_replies'],
-                    $settings['enhanced_privacy']
+                    $settings['enhanced_privacy'],
+                    $settings['extended_tweet_mode']
                 );
                 break;
             case 'search':
@@ -113,6 +118,14 @@ class Twitter
         }
     }
 
+    /**
+     * @param $settings
+     * @return array
+     * @throws ConfigurationException
+     * @throws RequestException
+     * @throws \OAuthException
+     * @throws \TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException
+     */
     public static function getUserFromSettings($settings)
     {
         $twitter = self::getTwitterFromSettings($settings);
@@ -122,6 +135,7 @@ class Twitter
 
     /**
      * Twitter constructor.
+     * @throws \TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException
      */
     public function __construct()
     {
@@ -161,21 +175,31 @@ class Twitter
      * @param int $limit
      * @param bool $exclude_replies
      * @param bool $enhanced_privacy
+     * @param bool $extended_tweet_mode
      * @return array
+     * @throws ConfigurationException
+     * @throws RequestException
+     * @throws \OAuthException
      */
     public function getTweetsFromTimeline(
         $user = null,
         $limit = null,
         $exclude_replies = false,
-        $enhanced_privacy = false
+        $enhanced_privacy = false,
+        $extended_tweet_mode = true
     ) {
         $params = [
             'exclude_replies' => $exclude_replies ? 'true' : 'false',
         ];
 
+        if ($extended_tweet_mode) {
+            $params['tweet_mode'] = 'extended';
+        }
+
         if ($user) {
             $params['screen_name'] = $user;
         }
+
         if ($limit) {
             $params['count'] = $limit;
         }
@@ -195,6 +219,9 @@ class Twitter
      * @param int $limit
      * @param bool $enhanced_privacy
      * @return array
+     * @throws ConfigurationException
+     * @throws RequestException
+     * @throws \OAuthException
      */
     public function getTweetsFromSearch($query, $limit = null, $enhanced_privacy = false)
     {
@@ -221,6 +248,9 @@ class Twitter
      *
      * @param string $user
      * @return array
+     * @throws ConfigurationException
+     * @throws RequestException
+     * @throws \OAuthException
      */
     public function getUser($user)
     {
@@ -238,6 +268,7 @@ class Twitter
      * @return array
      * @throws ConfigurationException
      * @throws RequestException
+     * @throws \OAuthException
      */
     protected function getData($path, $params, $method = 'GET')
     {
