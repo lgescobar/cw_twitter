@@ -37,6 +37,10 @@ plugin.tx_cwtwitter {
         enhanced_privacy = {$plugin.tx_cwtwitter.settings.enhanced_privacy}
         extended_tweet_mode = {$plugin.tx_cwtwitter.settings.extended_tweet_mode}
         include_rts = {$plugin.tx_cwtwitter.settings.include_rts}
+
+        # Use it to override FlexForm settings. (Comma-separated list of keys)
+        # Possible keys are: mode, username, query, limit, exclude_replies and include_rts
+        overrideFlexformSettings =
     }
 
     parsers {

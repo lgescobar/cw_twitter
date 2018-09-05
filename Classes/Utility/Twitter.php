@@ -193,6 +193,7 @@ class Twitter
     ) {
         $params = [
             'exclude_replies' => $exclude_replies ? 'true' : 'false',
+            'include_rts' => $include_rts ? 'true' : 'false',
         ];
 
         if ($extended_tweet_mode) {
@@ -206,8 +207,6 @@ class Twitter
         if ($limit) {
             $params['count'] = $limit;
         }
-
-        $params['include_rts'] = $include_rts;
 
         $tweets = $this->getData('statuses/user_timeline', $params);
         if ($enhanced_privacy) {
