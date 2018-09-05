@@ -33,8 +33,8 @@ $EM_CONF[$_EXTKEY] = [
     'author_email' => 'mail@arjandepooter.nl, louisantoniogarcia@gmail.com',
     'author_company' => '',
 
-    'state' => 'beta',
-    'version' => '2.2.0',
+    'state' => 'stable',
+    'version' => '2.3.0',
 
     'uploadfolder' => false,
     'clearCacheOnLoad' => false,
