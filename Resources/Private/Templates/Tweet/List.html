@@ -21,8 +21,9 @@
 							</div>
 							<f:if condition="{orig_tweet.retweeted_status}">
 								<div class="cwtw-Retweet">
-									<f:image src="EXT:cw_twitter/Resources/Public/Icons/retweet.png" alt="Retweet"></f:image>
-									<f:translate key="tweetlist.retweeted_by" /> <a href="https://twitter.com/{orig_tweet.user.screen_name}">{orig_tweet.user.name}</a>
+									<img src="{f:uri.image(src: 'EXT:cw_twitter/Resources/Public/Icons/retweet.png')}" alt="Retweet">
+									<f:translate key="tweetlist.retweeted_by" />
+									<a href="https://twitter.com/{orig_tweet.user.screen_name}">{orig_tweet.user.name}</a>
 								</div>
 							</f:if>
 						</div>

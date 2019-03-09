@@ -33,5 +33,5 @@ namespace CW\CwTwitter\ViewHelpers\Link\Tweet;
  */
 class ReplyViewHelper extends AbstractViewHelper
 {
-    protected $path = 'intent/tweet?in_reply_to={id}';
+    const PATH = 'intent/tweet?in_reply_to={id}';
 }

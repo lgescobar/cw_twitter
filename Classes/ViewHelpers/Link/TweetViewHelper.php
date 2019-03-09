@@ -35,5 +35,5 @@ use CW\CwTwitter\ViewHelpers\Link\Tweet\AbstractViewHelper;
  */
 class TweetViewHelper extends AbstractViewHelper
 {
-    protected $path = '{user}/status/{id_str}';
+    const PATH = '{user}/status/{id_str}';
 }

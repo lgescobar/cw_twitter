@@ -27,15 +27,12 @@ namespace CW\CwTwitter\ViewHelpers\Format;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 
 /**
- *
- *
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
  */
 class TweetViewHelper extends AbstractViewHelper
 {
@@ -137,6 +134,8 @@ class TweetViewHelper extends AbstractViewHelper
 
             return $tweettext;
         }
+
+        return '';
     }
 
     /**
@@ -150,8 +149,9 @@ class TweetViewHelper extends AbstractViewHelper
         $lastSegment = array_pop($segments);
 
         foreach ($segments as $segment) {
-            if (isset($setup[$segment . '.'])) {
-                $setup = $setup[$segment . '.'];
+            $key = $segment . '.';
+            if (isset($setup[$key])) {
+                $setup = $setup[$key];
             } else {
                 throw new Exception(
                     'TypoScript object path "' . htmlspecialchars($path) . '" does not exist',

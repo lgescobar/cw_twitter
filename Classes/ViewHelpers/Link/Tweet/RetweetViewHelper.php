@@ -33,5 +33,5 @@ namespace CW\CwTwitter\ViewHelpers\Link\Tweet;
  */
 class RetweetViewHelper extends AbstractViewHelper
 {
-    protected $path = 'intent/retweet?tweet_id={id}';
+    const PATH = 'intent/retweet?tweet_id={id}';
 }
