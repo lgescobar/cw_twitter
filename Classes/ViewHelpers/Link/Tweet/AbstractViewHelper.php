@@ -54,7 +54,7 @@ abstract class AbstractViewHelper extends AbstractTagBasedViewHelper
         $this->registerTagAttribute('rel', 'string', 'Specifies the relationship between the current document and the linked document');
         $this->registerTagAttribute('rev', 'string', 'Specifies the relationship between the linked document and the current document');
         $this->registerTagAttribute('target', 'string', 'Specifies where to open the linked document');
-        $this->registerTagAttribute('tweet', 'array', 'The tweet to be linked', true);
+        $this->registerArgument('tweet', 'array', 'The tweet to be linked', true);
     }
 
     /**
