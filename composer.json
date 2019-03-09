@@ -1,39 +1,39 @@
 {
-    "name": "lgescobar/cw-twitter",
-    "description": "Show tweets from user or search query on frontend.",
-    "keywords": [
-        "TYPO3 CMS",
-        "extension",
-        "Frontend",
-        "Plugin",
-        "Twitter",
-        "Feed"
-    ],
-    "homepage": "https://github.com/lgescobar/cw_twitter",
-    "authors": [
-        {
-            "name": "Arjan de Pooter",
-            "email": "mail@arjandepooter.nl",
-            "role": "Maintainer"
-        },
-        {
-            "name": "Luis Antonio García Escobar",
-            "email": "louisantoniogarcia@gmail.com",
-            "role": "Developer"
-        }
-    ],
-    "license": "GPL-3.0-or-later",
-    "type": "typo3-cms-extension",
-    "require": {
-        "php": "^7",
-        "typo3/cms-core": "^8.7 || ^9.5"
+  "name": "lgescobar/cw-twitter",
+  "description": "Show tweets from user or search query on frontend.",
+  "keywords": [
+    "TYPO3 CMS",
+    "extension",
+    "Frontend",
+    "Plugin",
+    "Twitter",
+    "Feed"
+  ],
+  "homepage": "https://github.com/lgescobar/cw_twitter",
+  "authors": [
+    {
+      "name": "Arjan de Pooter",
+      "email": "mail@arjandepooter.nl",
+      "role": "Maintainer"
     },
-    "replace": {
-        "cw_twitter": "self.version"
-    },
-    "autoload": {
-        "psr-4": {
-            "CW\\CwTwitter\\": "Classes/"
-        }
+    {
+      "name": "Luis Antonio García Escobar",
+      "email": "louisantoniogarcia@gmail.com",
+      "role": "Developer"
     }
+  ],
+  "license": "GPL-3.0-or-later",
+  "type": "typo3-cms-extension",
+  "require": {
+    "php": "^7",
+    "typo3/cms-core": "^8.7 || ^9.5"
+  },
+  "replace": {
+    "cw_twitter": "self.version"
+  },
+  "autoload": {
+    "psr-4": {
+      "CW\\CwTwitter\\": "Classes/"
+    }
+  }
 }
