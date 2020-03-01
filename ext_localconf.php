@@ -56,22 +56,22 @@ call_user_func(function ($extKey) {
     // Conditionally load OAuth classes to avoid redefining classes.
     $extPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($extKey);
     $oAuthClasses = [
-        'OAuthException' => '',
-        'OAuthConsumer' => '',
-        'OAuthToken' => '',
-        'OAuthSignatureMethod' => '',
-        'OAuthSignatureMethod_HMAC_SHA1' => '',
-        'OAuthSignatureMethod_PLAINTEXT' => '',
-        'OAuthSignatureMethod_RSA_SHA1' => '',
-        'OAuthRequest' => '',
-        'OAuthServer' => '',
-        'OAuthDataStore' => '',
-        'OAuthUtil' => '',
+        'OAuthException',
+        'OAuthConsumer',
+        'OAuthToken',
+        'OAuthSignatureMethod',
+        'OAuthSignatureMethod_HMAC_SHA1',
+        'OAuthSignatureMethod_PLAINTEXT',
+        'OAuthSignatureMethod_RSA_SHA1',
+        'OAuthRequest',
+        'OAuthServer',
+        'OAuthDataStore',
+        'OAuthUtil',
     ];
 
     foreach ($oAuthClasses as $oAuthClass) {
         if (!class_exists($oAuthClass)) {
-            require $extPath . '/Classes/Contrib/' . $oAuthClass . '.php';
+            require $extPath . 'Classes/Contrib/' . $oAuthClass . '.php';
         }
     }
 }, $_EXTKEY);
