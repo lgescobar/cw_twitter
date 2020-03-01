@@ -31,8 +31,6 @@ use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\AbstractFrontend;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-require_once(__DIR__ . '/../Contrib/OAuth.php');
-
 /**
  *
  *
