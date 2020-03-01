@@ -29,6 +29,7 @@ use CW\CwTwitter\Exception\ConfigurationException;
 use CW\CwTwitter\Exception\RequestException;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\AbstractFrontend;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -315,9 +316,9 @@ class Twitter
             throw new RequestException($msg, 1362059237);
         }
 
-        if ($method == 'GET') {
-            $conf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cw_twitter']);
-            $this->cache->set($this->calculateCacheKey($path, $params), $response, [], $conf['lifetime']);
+        if ($method === 'GET') {
+            $lifetime = $this->calculateCacheLifetime();
+            $this->cache->set($this->calculateCacheKey($path, $params), $response, [], $lifetime);
         }
 
         return $response;
@@ -333,6 +334,38 @@ class Twitter
     protected function calculateCacheKey($path, $params)
     {
         return md5(sprintf('%s|%s', $path, implode(',', $params)));
+    }
+
+    /**
+     * Calculates cache lifetime taking current extension configuration into account.
+     *
+     * @return int|null Lifetime in seconds (defaults to 60 seconds)
+     */
+    protected function calculateCacheLifetime()
+    {
+        if (version_compare(TYPO3_version, '9', '>=')) {
+            try {
+                $lifetime = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('cw_twitter', 'lifetime');
+            } catch (\Exception $e) {
+                $lifetime = 60;
+            }
+        } else {
+            // Legacy code for TYPO3 8LTS
+            $extConf = unserialize(
+                $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cw_twitter'],
+                ['allowed_classes' => false]
+            );
+
+            if (array_key_exists('lifetime', $extConf)) {
+                $lifetime = $extConf['lifetime'];
+            } else {
+                $lifetime = 60;
+            }
+        }
+
+        return $lifetime === null
+            ? null
+            : (int)$lifetime;
     }
 
     /**
