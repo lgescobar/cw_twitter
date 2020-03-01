@@ -28,6 +28,8 @@ namespace CW\CwTwitter\Controller;
 use CW\CwTwitter\Exception\ConfigurationException;
 use CW\CwTwitter\Exception\RequestException;
 use CW\CwTwitter\Utility\Twitter;
+use Psr\Log\LoggerInterface;
+use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -47,6 +49,11 @@ class TweetController extends ActionController
      * @var \TYPO3\CMS\Core\TypoScript\TypoScriptService
      */
     protected $typoScriptService;
+
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected $logger;
 
     /**
      * @param \TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService
@@ -82,6 +89,10 @@ class TweetController extends ActionController
                 }
             }
         }
+
+        if (!$this->logger instanceof LoggerInterface) {
+            $this->logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
+        }
     }
 
     /**
@@ -101,7 +112,7 @@ class TweetController extends ActionController
         } catch (ConfigurationException $e) {
             return $e->getMessage();
         } catch (RequestException $e) {
-            GeneralUtility::sysLog($e->getMessage(), 'cw_twitter', GeneralUtility::SYSLOG_SEVERITY_ERROR);
+            $this->logger->error($e->getMessage());
             $this->view->assign('error', $e);
         }
     }
