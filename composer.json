@@ -28,12 +28,14 @@
         "php": "^7",
         "typo3/cms-core": "^8.7 || ^9.5"
     },
-    "replace": {
-        "cw_twitter": "self.version"
-    },
     "autoload": {
         "psr-4": {
             "CW\\CwTwitter\\": "Classes/"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "cw_twitter"
         }
     }
 }
