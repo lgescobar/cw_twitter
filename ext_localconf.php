@@ -74,4 +74,4 @@ call_user_func(function ($extKey) {
             require $extPath . 'Classes/Contrib/' . $oAuthClass . '.php';
         }
     }
-}, $_EXTKEY);
+}, 'cw_twitter');
