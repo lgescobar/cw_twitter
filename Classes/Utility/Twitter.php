@@ -27,11 +27,13 @@ namespace CW\CwTwitter\Utility;
 
 use CW\CwTwitter\Exception\ConfigurationException;
 use CW\CwTwitter\Exception\RequestException;
+use CW\CwTwitter\Http\RequestFactory;
+use GuzzleHttp\Exception\GuzzleException;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\AbstractFrontend;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-
-require_once(__DIR__ . '/../Contrib/OAuth.php');
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
+use TYPO3\CMS\Extensionmanager\Utility\ConfigurationUtility;
 
 /**
  *
@@ -47,14 +49,9 @@ class Twitter
     protected $cache;
 
     /**
-     * @var \OAuthConsumer
+     * @var array
      */
-    protected $consumer;
-
-    /**
-     * @var \OAuthToken
-     */
-    protected $token;
+    protected $oauthParameters = [];
 
     /**
      * The base api url
@@ -91,14 +88,13 @@ class Twitter
      * @return array
      * @throws ConfigurationException
      * @throws RequestException
-     * @throws \OAuthException
      * @throws \TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException
      */
     public static function getTweetsFromSettings($settings)
     {
         $twitter = self::getTwitterFromSettings($settings);
 
-        $limit = intval($settings['limit']);
+        $limit = (int)$settings['limit'];
         switch ($settings['mode']) {
             case 'timeline':
                 return $twitter->getTweetsFromTimeline(
@@ -124,7 +120,6 @@ class Twitter
      * @return array
      * @throws ConfigurationException
      * @throws RequestException
-     * @throws \OAuthException
      * @throws \TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException
      */
     public static function getUserFromSettings($settings)
@@ -154,19 +149,21 @@ class Twitter
      */
     public function setConsumer($key, $secret)
     {
-        $this->consumer = new \OAuthConsumer($key, $secret);
+        $this->oauthParameters['consumer_key'] = $key;
+        $this->oauthParameters['consumer_secret'] = $secret;
     }
 
     /**
      * Sets token based on key and secret
      *
-     * @param string $key
+     * @param string $token
      * @param string $secret
      * @return void
      */
-    public function setToken($key, $secret)
+    public function setToken($token, $secret)
     {
-        $this->token = new \OAuthToken($key, $secret);
+        $this->oauthParameters['token'] = $token;
+        $this->oauthParameters['token_secret'] = $secret;
     }
 
     /**
@@ -181,7 +178,6 @@ class Twitter
      * @return array
      * @throws ConfigurationException
      * @throws RequestException
-     * @throws \OAuthException
      */
     public function getTweetsFromTimeline(
         $user = null,
@@ -225,7 +221,6 @@ class Twitter
      * @return array
      * @throws ConfigurationException
      * @throws RequestException
-     * @throws \OAuthException
      */
     public function getTweetsFromSearch($query, $limit = null, $enhanced_privacy = false)
     {
@@ -254,7 +249,6 @@ class Twitter
      * @return array
      * @throws ConfigurationException
      * @throws RequestException
-     * @throws \OAuthException
      */
     public function getUser($user)
     {
@@ -270,45 +264,30 @@ class Twitter
      * @param array $params
      * @param string $method
      * @return array
-     * @throws ConfigurationException
      * @throws RequestException
-     * @throws \OAuthException
      */
     protected function getData($path, $params, $method = 'GET')
     {
-        if (!function_exists('curl_init')) {
-            throw new ConfigurationException('PHP Curl functions not available on this server', 1362059213);
+        if ($method === 'GET' && $this->cache->has($this->calculateCacheKey($path, $params))) {
+            return $this->cache->get($this->calculateCacheKey($path, $params));
         }
 
-        if ($method === 'GET') {
-            if ($this->cache->has($this->calculateCacheKey($path, $params))) {
-                return $this->cache->get($this->calculateCacheKey($path, $params));
-            }
+        /** @var \CW\CwTwitter\Http\RequestFactory $requestFactory */
+        $requestFactory = GeneralUtility::makeInstance(RequestFactory::class);
+
+        try {
+            $response = $requestFactory->oauthRequest(
+                $this->api_url . $path . '.json?' . http_build_query($params),
+                $method,
+                ['timeout' => 5.0],
+                $this->oauthParameters
+            );
+        } catch (GuzzleException $e) {
+            throw new RequestException(sprintf("Error in request: '%s'", $e->getMessage()), 1362059229);
         }
 
-        $request = \OAuthRequest::from_consumer_and_token(
-            $this->consumer,
-            $this->token,
-            $method,
-            $this->api_url . $path . '.json',
-            $params
-        );
-        $request->sign_request(new \OAuthSignatureMethod_HMAC_SHA1(), $this->consumer, $this->token);
+        $response = json_decode($response->getBody()->getContents(), true);
 
-        $hCurl = curl_init($request->to_url());
-        curl_setopt_array($hCurl, [
-            CURLOPT_HTTPHEADER => [$request->to_header()],
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT => 5000,
-        ]);
-
-        $response = curl_exec($hCurl);
-
-        if ($response === false) {
-            throw new RequestException(sprintf("Error in request: '%s'", curl_error($hCurl)), 1362059229);
-        }
-
-        $response = json_decode($response, true);
         if (isset($response['errors'])) {
             $msg = 'Error(s) in Request:';
             foreach ($response['errors'] as $error) {
@@ -317,9 +296,18 @@ class Twitter
             throw new RequestException($msg, 1362059237);
         }
 
-        if ($method == 'GET') {
-            $conf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cw_twitter']);
-            $this->cache->set($this->calculateCacheKey($path, $params), $response, [], $conf['lifetime']);
+        if ($method === 'GET') {
+            if (VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) >= 9000000) {
+                $cacheLifetime = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cw_twitter']['lifetime'];
+            } else {
+                $extConf = unserialize(
+                    $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['cw_twitter'] ?? '',
+                    ['allowed_classes' => false]
+                );
+                $cacheLifetime = $extConf['lifetime'] ?: null;
+            }
+
+            $this->cache->set($this->calculateCacheKey($path, $params), $response, [], $cacheLifetime);
         }
 
         return $response;
