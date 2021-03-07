@@ -34,7 +34,7 @@ $EM_CONF[$_EXTKEY] = [
     'author_company' => '',
 
     'state' => 'stable',
-    'version' => '2.3.1',
+    'version' => '2.3.2',
 
     'uploadfolder' => false,
     'clearCacheOnLoad' => false,
